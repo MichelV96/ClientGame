@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+<h1>Creeër een room of join er één</h1>
+<form id="room">
+    Room name:<input id="roomName" type="text">
+    <input type="submit" value="Creeër room">
+</form>
+<p></p>
+<div id="room_div"></div>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://localhost:4200');
+    var userId;
+    socket.on('connect', function(data) {
+        //id van de client
+        userId = socket.io.engine.id;
+
+        socket.emit('join', 'Hello World from client from the room page');
+    });
+
+
+    socket.on('refreshRooms', function (data) {
+        //de div leegmaken en alles weer opnieuw inladen
+        $('#room_div').empty();
+        for(i=0; i<data.length; i++){
+            //alleen dit doen als de room niet vol zit
+            if(data[i].player < 2){
+                //naam van de room en een button maken voor elke room de value is de plek in de array
+                $('#room_div').append(data[i]['name'] + "  <button onclick='joinRoom("+[i]+")' id='join_room'>Join room</button> </br>");
+            }
+        }
+    });
+    //gebeurt wanneer iemand een room creeërt
+    $('#room').submit(function(e){
+        e.preventDefault();
+        //de value van de input
+        var roomName = $('#roomName').val();
+        //input sturen naar de server en daar opslaan
+        socket.emit('room', roomName);
+    });
+
+    socket.on("joinOwnRoom", function (data) {
+       joinRoom(data);
+    });
+    //onclick zorgt ervoor dat deze functie wordt aangeroepen
+    function joinRoom(roomId){
+        //naar de room sturen die die joint
+        socket.emit('joinRoom', roomId);
+        location.href = '/room?roomid='+roomId;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Room</title>
+</head>
+<body>
+<h1>Welkom in de Room</h1>
+<p></p>
+<div id="room_div"></div>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://localhost:4200');
+    var userId;
+    var roomId = location.search.split('roomid=')[1]
+
+    socket.on('connect', function(data) {
+        //id van de client
+        userId = socket.io.engine.id;
+        socket.emit('join', 'Hello World from client from the room');
+    });
+</script>
+</body>
+</html>
