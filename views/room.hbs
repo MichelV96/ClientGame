@@ -17,7 +17,12 @@
     socket.on('connect', function(data) {
         //id van de client
         userId = socket.io.engine.id;
-        socket.emit('join', 'Hello World from client from the room');
+        //room controleren server sided
+        socket.emit('joinRoom', {user: userId, room: roomId});
+    });
+
+    socket.on('fullRoom', function () {
+        location.href = "/roomScreen";
     });
 </script>
 </body>

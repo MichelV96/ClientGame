@@ -1,17 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-</head>
-<body>
-<h1>Hier moet homescreen komen met spel starten en dat je dan naar roomScreen wordt geredirect</h1>
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    var socket = io.connect('http://localhost:4200');
-    socket.on('connect', function(data) {
-        socket.emit('join', 'Hello World from client from the index page');
-    });
-
-</script>
-</body>
-</html>
+<style>
+    body{
+        background:url("/images/splashscreen.png") no-repeat center center fixed;
+        bacground-size:cover;
+    }
+</style>
+<p><a href="/roomScreen"> <image id="start" height="auto" src="/images/start.png" width="20%"/></a></p>

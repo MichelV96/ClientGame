@@ -9,6 +9,8 @@ app.set('view engine', 'hbs');
 
 var Room = require('./room.js');
 
+app.use(express.static(__dirname + '/public'));
+
 var index = require('./routes/index');
 app.use('/', index);
 var roomScreen = require('./routes/roomScreen');
@@ -22,7 +24,6 @@ io.on('connection', function(client) {
     console.log('Client connected: ' + client.id);
 
     client.on('join', function(data) {
-        console.log(data);
         //nieuwe client is geconnect dus weer alle rooms alleen voor deze persoon ophalen
         client.emit('refreshRooms', Room.array);
     });
@@ -30,14 +31,28 @@ io.on('connection', function(client) {
     client.on('room', function(data) {
         //nieuwe room aanmaken
         var room = new Room.Room(data);
-        //voor iedereen de rooms opnieuw ophalen
+        //degene die de room aanmaakt joint de room
         client.emit('joinOwnRoom', Room.array.length-1);
+        //voor ieder ander de rooms refreshen om te checken of die niet vol zit
         client.broadcast.emit('refreshRooms', Room.array);
     });
+
     //als iemand een room joint
     client.on('joinRoom', function(data){
-        Room.array[data].player = parseInt(Room.array[data].player) + 1;
-        //weer alle rooms refreshen want je wilt niet een room laten zien die vol is
-        client.broadcast.emit('refreshRooms', Room.array);
+        if(Room.array.length == 0 || Room.array[data.room] == undefined){
+            //kamer bestaat niet dus weg
+            client.emit("fullRoom");
+        }else {
+            var user = data.user;
+            var room = data.room;
+            //Controleren of de room niet vol zit | als er 4 spelers in zitten is de room vol
+            if (Room.array[room].players.length == 4) {
+                client.emit("fullRoom");
+            } else {
+                //de user zijn id pushen in de array
+                Room.array[room].players.push(user);
+                client.broadcast.emit('refreshRooms', Room.array);
+            }
+        }
     });
 });
