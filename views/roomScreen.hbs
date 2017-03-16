@@ -33,9 +33,14 @@
         $('#room_div').empty();
         for(i=0; i<data.length; i++){
             //alleen dit doen als de room niet vol zit
-            if(data[i].player < 2){
+            if(data[i].players.length <= 2){
                 //naam van de room en een button maken voor elke room de value is de plek in de array
-                $('#room_div').append(data[i]['name'] + "  <button onclick='joinRoom("+[i]+")' id='join_room'>Join room</button> </br>");
+                $('#room_div').append(data[i]['name'] + "  <button onclick='joinRoom("+[i]+")' id='join_room'>Join room</button> <b style='color:lawngreen'>"+data[i].players.length+"/4</b> </br>");
+            }else if(data[i].players.length == 3){
+                $('#room_div').append(data[i]['name'] + "  <button onclick='joinRoom("+[i]+")' id='join_room'>Join room</button> <b style='color:darkorange'>"+data[i].players.length+"/4</b> </br>");
+            }else {
+                $('#room_div').append(data[i]['name'] + " <b style='color:red'>"+data[i].players.length+"/4</b> </br>");
+
             }
         }
     });
@@ -53,8 +58,6 @@
     });
     //onclick zorgt ervoor dat deze functie wordt aangeroepen
     function joinRoom(roomId){
-        //naar de room sturen die die joint
-        socket.emit('joinRoom', roomId);
         location.href = '/room?roomid='+roomId;
     }
 </script>

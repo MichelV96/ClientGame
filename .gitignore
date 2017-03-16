@@ -1167,8 +1167,8 @@ node_modules/yeast/LICENSE
 node_modules/yeast/README.md
 node_modules/yeast/index.js
 node_modules/yeast/package.json
-.idea/clientproj.iml
 .idea/vcs.xml
+.idea/clientproj.iml
 node_modules/after/.npmignore
 node_modules/after/.travis.yml
 node_modules/arraybuffer.slice/.npmignore

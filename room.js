@@ -2,7 +2,7 @@ var rooms = [];
 
 var Room = function(name) {
     this.name = name;
-    this.player = 0;
+    this.players = [];
 
     rooms.push(this);
 };
