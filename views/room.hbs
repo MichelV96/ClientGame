@@ -1,11 +1,33 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <!--C:\Users\Louwrens\PhpstormProjects\clientprojgit\app.js-->
     <title>Room</title>
+    <script src="functions.js"></script>
 </head>
 <body>
 <h1>Welkom in de Room</h1>
-<p></p>
+<p id="demo"></p>
+<script>
+    var WordEnum = {
+        1: "fiets",
+        2: "wetboek",
+        3: "regendans",
+        4: "snor",
+        5: "parkeermeter",
+        6: "theater",
+        7: "koning",
+        8: "invalide",
+        9: "vliegdekschip",
+        10: "nederland"
+    }
+
+    var random = Math.floor((Math.random()*10)+1);
+    document.getElementById("demo").innerHTML = WordEnum[random];
+</script>
+<input type="text" id="test1">
+<button onclick='woordCheck(document.getElementById("test1").value.toLowerCase());'>Test</button>
+
 <div id="room_div"></div>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="/socket.io/socket.io.js"></script>
@@ -19,6 +41,13 @@
         userId = socket.io.engine.id;
         socket.emit('join', 'Hello World from client from the room');
     });
+
+    function woordCheck(input) {
+        debugger;
+        if(input == WordEnum[random]){
+            socket.emit("JOEPIE");
+        }
+    }
 </script>
 </body>
 </html>

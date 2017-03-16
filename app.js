@@ -4,6 +4,8 @@ var path = require('path');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
+app.use(express.static(__dirname + 'public'));
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -40,4 +42,5 @@ io.on('connection', function(client) {
         //weer alle rooms refreshen want je wilt niet een room laten zien die vol is
         client.broadcast.emit('refreshRooms', Room.array);
     });
+
 });
