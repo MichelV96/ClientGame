@@ -1,34 +1,13 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <!--C:\Users\Louwrens\PhpstormProjects\clientprojgit\app.js-->
-    <title>Room</title>
-    <script src="functions.js"></script>
-</head>
-<body>
+<script src="functions.js"></script>
 <h1>Welkom in de Room</h1>
-<p id="demo"></p>
-<script>
-    var WordEnum = {
-        1: "fiets",
-        2: "wetboek",
-        3: "regendans",
-        4: "snor",
-        5: "parkeermeter",
-        6: "theater",
-        7: "koning",
-        8: "invalide",
-        9: "vliegdekschip",
-        10: "nederland"
-    }
-
-    var random = Math.floor((Math.random()*10)+1);
-    document.getElementById("demo").innerHTML = WordEnum[random];
-</script>
-<input type="text" id="test1">
 <button onclick='woordCheck(document.getElementById("test1").value.toLowerCase());'>Test</button>
 
-<div id="room_div"></div>
+<div id="room_div">
+    <form id="woordRaden">
+        <p>Woord: <input type="text" id="woord"></p>
+        <p><input type="submit" id="woordPoging"></p>
+    </form>
+</div>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -47,12 +26,4 @@
         location.href = "/roomScreen";
     });
 
-    function woordCheck(input) {
-        debugger;
-        if(input == WordEnum[random]){
-            socket.emit("JOEPIE");
-        }
-    }
 </script>
-</body>
-</html>
