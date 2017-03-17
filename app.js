@@ -58,4 +58,19 @@ io.on('connection', function(client) {
         }
     });
 
+    //als iemand een chat bericht verstuurt
+    client.on('chatBericht', function (data) {
+       var message = data.message;
+       var roomId = data.room;
+       var user = data.user;
+        console.log("HET WOORD IS: " + Room.array[roomId].woord);
+       //controleren als de message overeen komt met het woord dat geraden moet wroden
+        if(message.toLowerCase() == Room.array[roomId].woord ){
+            console.log("HET WOORD IS GERADEN");
+        }
+        for(i=0; i<Room.array[roomId].players.length; i++){
+            io.to(Room.array[roomId].players[i]).emit("chat", message);
+        }
+    });
+
 });

@@ -1,19 +1,20 @@
-<script src="functions.js"></script>
 <h1>Welkom in de Room</h1>
 <button onclick='woordCheck(document.getElementById("test1").value.toLowerCase());'>Test</button>
 
 <div id="room_div">
-    <form id="woordRaden">
-        <p>Woord: <input type="text" id="woord"></p>
-        <p><input type="submit" id="woordPoging"></p>
-    </form>
+    <div id="chat_wrapper">
+        <div id="chat"></div>
+        <form id="chat_form">
+            <p><textarea id="message"></textarea> <input type="submit" value="verstuur" /></p>
+        </form>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var socket = io.connect('http://localhost:4200');
     var userId;
-    var roomId = location.search.split('roomid=')[1]
+    var roomId = location.search.split('roomid=')[1];
 
     socket.on('connect', function(data) {
         //id van de client
@@ -24,6 +25,23 @@
 
     socket.on('fullRoom', function () {
         location.href = "/roomScreen";
+    });
+
+    socket.on('chat', function (data) {
+       $("#chat").append(data + "</br>");
+       $('#chat').animate({scrollTop: $(document).height() + $('#chat').height()});
+    });
+
+    $("#chat_form").submit(function (e) {
+       e.preventDefault();
+       //de value uit de textarea halen en kijken of er iets in zit
+       var message = $("#message").val();
+       if(message.length > 0){
+           //chat bericht naar de server sturen
+           socket.emit('chatBericht', {message: message, room: roomId, user: userId});
+       }
+       //textarea weer leeg zetten
+        document.getElementById('message').value = "";
     });
 
 </script>
