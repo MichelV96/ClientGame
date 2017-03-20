@@ -1,22 +1,16 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>{{title}}</title>
-</head>
-<body>
-<img src="/images/background.jpg" id="background" alt="">
+<img src="/images/background.jpg" class="background" alt="">
 <img src="/images/potlood.png" class="imageIcon">
 <div class="maindiv">
     <div class="toppart">
-<h1>Creeër een room of join er één</h1>
+<h1>Creeër een room of join er één!</h1>
         <hr>
 <form id="room">
     <input id="roomName" type="text" placeholder="Naam van de room">
     <input type="submit" value="Creeër room" class="button">
 </form>
     </div>
-    <div class="tooltip"><img src="/images/rooms.png" width="15px" height="15px" style="margin-right: 3px;"><span class="tooltiptext">Aantal rooms</span> <b style="color: green">12</b></div>
-    <div class="tooltip"><img src="/images/players.png" width="15px" height="15px" style="margin-right: 3px;"><span class="tooltiptext">Aantal spelers</span> <b style="color: green">25</b></div>
+    <div class="tooltip"><img src="/images/rooms.png" width="15px" height="15px" style="margin-right: 3px;"><span class="tooltiptext">Aantal rooms</span> <b id="room_amount" style="color: green"></b></div>
+    <div class="tooltip"><img src="/images/players.png" width="15px" height="15px" style="margin-right: 3px;"><span class="tooltiptext">Aantal spelers</span> <b id="player_amount" style="color: green"></b></div>
     <hr>
 <div id="room_div" class="bottompart"></div>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -33,6 +27,22 @@
 
 
     socket.on('refreshRooms', function (data) {
+    var roomsAmount = data.length;
+    if(roomsAmount != 0) {
+        $('#room_amount').html(roomsAmount);
+    }else{
+        $('#room_amount').html(0);
+    }
+
+    var playersAmount = 0;
+    for(p in data){
+            playersAmount += data[p].players.length;
+        }
+    if(playersAmount != 0) {
+        $('#player_amount').html(playersAmount);
+    }else{
+        $('#player_amount').html(0);
+    }
 
         //de div leegmaken en alles weer opnieuw inladen
         $('#room_div').empty();
@@ -68,5 +78,3 @@
 </script>
 </div>
 </div>
-</body>
-</html>
