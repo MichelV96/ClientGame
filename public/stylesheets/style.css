@@ -6,3 +6,123 @@ body {
 a {
   color: #00B7FF;
 }
+
+hr{
+  margin: 0px;
+}
+
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  /* Preserve aspet ratio */
+  width: 100%;
+  height: 100%;
+}
+#room{
+  margin: 1em;
+}
+.tooltip{
+  display:inline-flex;
+  margin: 5px;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  font-family: "Lucida Sans Typewriter";
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.maindiv{
+  margin:auto;
+  text-align: center;
+  background-color: lightgrey;
+  min-height: 500px;
+  width: 500px;
+  border: solid black 5px;
+}
+
+.imageIcon{
+  width: 200px;
+  height: 200px;
+  position: static;
+  float:right;
+}
+.button {
+  border:solid #f09294 2px;
+  border-radius:10px;
+  color: #f09294;
+  background-color: #1561b4;
+  font-family: "Lucida Sans Typewriter";
+  font-weight: bold;
+  height: 25px;
+  width:100px;
+}
+.button:hover{
+  background-color: #208dcd;
+}
+.toppart{
+  border-bottom: solid black 5px;
+}
+.bottompart{
+  max-height: 500px;
+  overflow-y: auto;
+}
+.bottompart::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+}
+
+.bottompart::-webkit-scrollbar
+{
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+.bottompart::-webkit-scrollbar-thumb
+{
+  background-color: #1561b4;
+}
+.roomline{
+  display: flex;
+  justify-content: space-between;
+  margin-left:1em;
+  margin-right:1em;
+  margin-top:2px;
+  margin-bottom:2px;
+}
+.name{
+  font-family: "Lucida Sans Typewriter";
+  height: 25px;
+  vertical-align: middle;
+  width:50%;
+  text-transform: uppercase;
+}
+.roomlineRight{
+  width: 50%;
+  height:25px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2%;
+  margin-left: 1em;
+}
+
+@media screen and (max-width: 1080px) {
+    .imageIcon{
+      display: none;
+    }
+}
