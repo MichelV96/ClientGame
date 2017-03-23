@@ -1,5 +1,5 @@
 //Breedte en hoogte van de canvas
-var canvasWidth = 400;
+var canvasWidth = 900;
 var canvasHeight = 400;
 
 //Maak arrays aan voor de lijnen

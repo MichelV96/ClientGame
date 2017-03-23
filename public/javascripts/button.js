@@ -41,10 +41,10 @@ var buttonControl = function() {
 
 //Clear het canvas en maak array leeg
 var clearCanvas = function () {
-    var ArrayX = [];
-    var ArrayY = [];
-    var ArrayColor = [];
-    var ArraySize = [];
+    ArrayX = [];
+    ArrayY = [];
+    ArrayColor = [];
+    ArraySize = [];
     context.clearRect(0, 0, canvasWidth, canvasHeight);
     pencilColor = "black";
 }
