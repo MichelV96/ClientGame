@@ -1,37 +1,38 @@
 //Gum, zet kleur op wit
 var eraser = function () {
     pencilColor = "white";
+    $('#canvas').css("cursor", "url('../images/eraserBig.png'), pointer")
 }
 
 //Grotere lijn
 var bigger = function () {
-    if (pencilWidth < 26) {
-        pencilWidth += 5;
+    if (pencilWidth < 90) {
+        pencilWidth += 10;
     } else {
-        pencilWidth = 26
+        pencilWidth = 100
     }
     buttonControl();
 }
 
 //Kleinere lijn
 var smaller = function () {
-    if (pencilWidth > 1) {
-        pencilWidth -= 5;
+    if (pencilWidth > 30) {
+        pencilWidth -= 10;
     } else {
-        pencilWidth = 1;
+        pencilWidth = 20;
     }
     buttonControl();
 }
 
 //Show/hide size buttons
 var buttonControl = function() {
-    if(pencilWidth == 26) {
+    if(pencilWidth == 100) {
         $('#bigger').hide();
     } else {
         $('#bigger').show();
     }
 
-    if (pencilWidth == 1) {
+    if (pencilWidth == 20) {
         $('#smaller').hide();
     } else {
         $('#smaller').show();

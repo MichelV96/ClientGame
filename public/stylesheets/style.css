@@ -270,8 +270,19 @@ canvas {
     background-color: black;
 }
 
+#eraser {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url("../images/eraserSmall.png");
+}
+
+#eraser:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
 .paintPanel {
-    border: 10px solid black;
     border-radius: 10px;
 }
 

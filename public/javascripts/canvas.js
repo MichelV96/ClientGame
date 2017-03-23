@@ -15,7 +15,7 @@ var paint;
 //Standaard instellingen voor tekenen
 var pencilColor = "black";
 var pencilShape = "round";
-var pencilWidth = 11;
+var pencilWidth = 20;
 
 //Aanmaken van het canvas
 var canvasDiv = document.getElementById('canvasDiv');
