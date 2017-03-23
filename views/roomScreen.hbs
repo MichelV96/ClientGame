@@ -1,20 +1,18 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>{{title}}</title>
-</head>
-<body>
-<h1>Creeër een room of join er één</h1>
+<img src="/images/background.jpg" class="background" alt="">
+<img src="/images/potlood.png" class="imageIcon">
+<div class="maindiv">
+    <div class="toppart">
+<h1>Creeër een room of join er één!</h1>
+        <hr>
 <form id="room">
-    Room name:<input id="roomName" type="text">
-    <input type="submit" value="Creeër room">
+    <input id="roomName" type="text" placeholder="Naam van de room">
+    <input type="submit" value="Creeër room" class="button">
 </form>
-<p></p>
-<div class="cursors">
-    <img src="../public/images/kat.png" />
-</div>
-
-<div id="room_div"></div>
+    </div>
+    <div class="tooltip"><img src="/images/rooms.png" width="15px" height="15px" style="margin-right: 3px;"><span class="tooltiptext">Aantal rooms</span> <b id="room_amount" style="color: green"></b></div>
+    <div class="tooltip"><img src="/images/players.png" width="15px" height="15px" style="margin-right: 3px;"><span class="tooltiptext">Aantal spelers</span> <b id="player_amount" style="color: green"></b></div>
+    <hr>
+<div id="room_div" class="bottompart"></div>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -29,17 +27,34 @@
 
 
     socket.on('refreshRooms', function (data) {
+    var roomsAmount = data.length;
+    if(roomsAmount != 0) {
+        $('#room_amount').html(roomsAmount);
+    }else{
+        $('#room_amount').html(0);
+    }
+
+    var playersAmount = 0;
+    for(p in data){
+            playersAmount += data[p].players.length;
+        }
+    if(playersAmount != 0) {
+        $('#player_amount').html(playersAmount);
+    }else{
+        $('#player_amount').html(0);
+    }
+
         //de div leegmaken en alles weer opnieuw inladen
         $('#room_div').empty();
         for(i=0; i<data.length; i++){
             //alleen dit doen als de room niet vol zit
             if(data[i].players.length <= 2){
                 //naam van de room en een button maken voor elke room de value is de plek in de array
-                $('#room_div').append(data[i]['name'] + "  <button onclick='joinRoom("+[i]+")' id='join_room'>Join room</button> <b style='color:lawngreen'>"+data[i].players.length+"/4</b> </br>");
+                $('#room_div').append("<div class='roomline'><p class='name'>"+ data[i]['name'] + "</p>  <div class='roomlineRight'><button onclick='joinRoom("+[i]+")' id='join_room' class='button'>Join room</button> <b style='color:green' class='amount'>"+data[i].players.length+"/4</b></div></div>");
             }else if(data[i].players.length == 3){
-                $('#room_div').append(data[i]['name'] + "  <button onclick='joinRoom("+[i]+")' id='join_room'>Join room</button> <b style='color:darkorange'>"+data[i].players.length+"/4</b> </br>");
+                $('#room_div').append("<div class='roomline'><p class='name'>"+ data[i]['name'] + "</p>  <button onclick='joinRoom("+[i]+")' id='join_room' class='button'>Join room</button> <b style='color:darkorange' class='amount'>"+data[i].players.length+"/4</b></div>");
             }else {
-                $('#room_div').append(data[i]['name'] + " <b style='color:red'>"+data[i].players.length+"/4</b> </br>");
+                $('#room_div').append("<div class='roomline'><p class='name'>"+data[i]['name'] + "</p>   <b style='color:red'>"+data[i].players.length+"/4</b> </br></div>");
 
             }
         }
@@ -61,5 +76,5 @@
         location.href = '/room?roomid='+roomId;
     }
 </script>
-</body>
-</html>
+</div>
+</div>
