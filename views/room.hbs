@@ -43,5 +43,8 @@
        //textarea weer leeg zetten
         document.getElementById('message').value = "";
     });
+    $(window).bind('beforeunload', function(){
+        socket.emit('leaveRoom', {user: userId, room: roomId});
+    });
 
 </script>

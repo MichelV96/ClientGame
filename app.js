@@ -22,8 +22,8 @@ app.use('/room', room);
 
 server.listen(4200);
 
-io.on('connection', function(client) {
-    console.log('Client connected: ' + client.id);
+io.sockets.on('connection', function(client) {
+    console.log("Client connected: " + client.id);
 
     client.on('join', function(data) {
         //nieuwe client is geconnect dus weer alle rooms alleen voor deze persoon ophalen
@@ -57,14 +57,13 @@ io.on('connection', function(client) {
             }
         }
     });
-
     //als iemand een chat bericht verstuurt
     client.on('chatBericht', function (data) {
-       var message = data.message;
-       var roomId = data.room;
-       var user = data.user;
+        var message = data.message;
+        var roomId = data.room;
+        var user = data.user;
         console.log("HET WOORD IS: " + Room.array[roomId].woord);
-       //controleren als de message overeen komt met het woord dat geraden moet wroden
+        //controleren als de message overeen komt met het woord dat geraden moet wroden
         if(message.toLowerCase() == Room.array[roomId].woord ){
             console.log("HET WOORD IS GERADEN");
         }
@@ -73,4 +72,14 @@ io.on('connection', function(client) {
         }
     });
 
+    client.on('leaveRoom', function (data) {
+       var room = data.room;
+       var user = data.user;
+       //als het element bestaat in de array en checken of de room wel bestaat
+       if(Room.array[room] != undefined && Room.array[room].players.indexOf(user) > -1){
+           //verwijder het element uit de array
+           Room.array[room].players.splice(Room.array[room].players.indexOf(user), 1);
+           client.broadcast.emit('refreshRooms', Room.array);
+       }
+    });
 });
