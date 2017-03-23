@@ -2,8 +2,11 @@
 var canvasWidth = 400;
 var canvasHeight = 400;
 
-//Maak array aan voor de lijnen
-var lines = [];
+//Maak arrays aan voor de lijnen
+var ArrayX = [];
+var ArrayY = [];
+var ArrayColor = [];
+var ArraySize = [];
 
 //Maak een boolean paint
 var paint;
@@ -61,8 +64,10 @@ $('#canvas').mouseleave(function (e) {
 
 //Maak een json object van een lijn en zet deze in een array
 var createLine = function (x, y) {
-    var line = {"x": x, "y": y, "color": pencilColor, "size": pencilWidth};
-    lines.push(line);
+    ArrayX.push(x);
+    ArrayY.push(y);
+    ArrayColor.push(pencilColor);
+    ArraySize.push(pencilWidth);
 }
 
 //Tekenen op het canvas
@@ -74,20 +79,20 @@ var DrawOnCanvas = function () {
     context.lineJoin = pencilShape;
 
     //Haal het aantal kliks uit de array en teken
-    for (var i = 0; i < lines.length; i++) {
+    for (var i = 0; i < ArrayX.length; i++) {
 
         //Geef kleur en dikte mee
-        context.strokeStyle = lines[i].color;
-        context.lineWidth = lines[i].size;
+        context.strokeStyle = ArrayColor[i];
+        context.lineWidth = ArraySize[i];
 
         //Begin van de lijn
         context.beginPath();
 
         //Stel de coordinaten in voor het trekken van de lijn
-        context.moveTo(lines[i].x - 1, lines[i].y - 1);
+        context.moveTo(ArrayX[i] - 1, ArrayY[i] - 1);
 
         //Tekenen van de lijn
-        context.lineTo(lines[i].x, lines[i].y);
+        context.lineTo(ArrayX[i], ArrayY[i] );
         context.closePath();
         context.stroke();
     }
