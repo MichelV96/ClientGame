@@ -71,9 +71,32 @@
             <p><textarea id="message"></textarea> <input type="submit" value="verstuur" /></p>
         </form>
     </div>
-</div>
+    <div id="tekenen">
+        <button onclick="clearCanvas()">Clear</button>
+        <button onclick="eraser()">Eraser</button>
+        <hr>
+        <button id="bigger" onclick="bigger()">++</button>
+        <button id="smaller" onclick="smaller()">--</button>
+        <hr>
+        <p id="black" class="colorSquare"></p>
+        <p id="purple" class="colorSquare"></p>
+        <p id="blue" class="colorSquare"></p>
+        <p id="orange" class="colorSquare"></p>
+        <p id="red" class="colorSquare"></p>
+        <p id="yellow" class="colorSquare"></p>
+        <p id="green" class="colorSquare"></p>
 
+
+        <!--Hier wordt de canvas getekend d.m.v. javascript-->
+        <div id="canvasDiv"></div>
+
+        <script src="javascripts/color.js"></script>
+        <script src="javascripts/canvas.js"></script>
+        <script src="javascripts/button.js"></script>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var socket = io.connect('http://localhost:4200');
@@ -106,6 +129,9 @@
        }
        //textarea weer leeg zetten
         document.getElementById('message').value = "";
+    });
+    $(window).bind('beforeunload', function(){
+        socket.emit('leaveRoom', {user: userId, room: roomId});
     });
 
 </script>
