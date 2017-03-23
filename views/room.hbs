@@ -1,5 +1,6 @@
 <img src="/images/background.jpg" class="background" alt="">
-<<h1 id="title">Welkom in de Room</h1>
+<h1 id="title">Welkom in de Room</h1>
+<p id="drawer" style="color:royalblue"></p>
 <!--<button onclick='woordCheck(document.getElementById("test1").value.toLowerCase());'>Test</button>-->
 <div class="wrapper">
     <div class="leftpanel">
@@ -31,7 +32,7 @@
         </div>
         <div class="hostPrivileges">
             <!--If player = host-->
-            <button class="button" onclick="start()" id="startknop">Start</button>
+            <button class="button" id="startknop">Start</button>
             <button class="button" onclick="setScore()">Kick Player</button>
             <button class="button">Abandon Room</button>
             <!--else-->
@@ -66,9 +67,55 @@
 <script src="javascripts/button.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
+    var reset = 0;
+    var countdownSec = 120;
+    var stop = false;
+    var score = 50;
+    var scoredisplay = 0;
+    var p1 = 0;
+    var p2 = 0;
+    var p3 = 0;
+    var p4 = 0;
     var socket = io.connect('http://localhost:4200');
     var userId;
     var roomId = location.search.split('roomid=')[1];
+
+    $("#startknop").click(function () {
+        socket.emit('startGame', roomId);
+        stop = false;
+    });
+    function start() {
+        var min = Math.floor(countdownSec / 60);
+        var sec = countdownSec % 60;
+        if(countdownSec != 0 && !stop) {
+            if (reset == 0) {
+                setTimeout(function () {
+                    countdownSec--;
+                    score = (score - 0.4).toFixed(2);
+                    scoredisplay = Math.floor(score);
+                    socket.emit('tekenen', {room: roomId, x: ArrayX, y: ArrayY, color: ArrayColor, size: ArraySize});
+                    start();
+                }, 1000);
+                document.getElementById("output").innerHTML = "Time left: 0" + min + ":" + sec + "<br> Points: " + scoredisplay;
+            } else {
+                window.setTimeout(function () {
+                    countdownSec = 120;
+                    score = 50;
+                    scoredisplay = 0;
+                    reset = 0;
+                    alert("time's up");
+                    start();
+                }, 5000);
+            }
+        }
+    }
+    function setScore() {
+        p1 += scoredisplay;
+        reset = 1;
+        document.getElementById("scores").innerHTML =
+                "player 1: " + p1 + " pts <br> player 2: " + p2 + " pts <br> player 3: " + p3 + " pts <br> player 4: " + p4 + " pts ";
+    }
+
     socket.on('connect', function (data) {
         //id van de client
         userId = socket.io.engine.id;
@@ -95,53 +142,29 @@
         document.getElementById('message').value = "";
     });
     socket.on('tekening', function (data) {
-        DrawOnCanvas(data);
+        ArraySize = data.size;
+        ArrayY = data.y;
+        ArrayX = data.x;
+        ArrayColor = data.color;
+        DrawOnCanvas();
+    });
+
+    socket.on('startTimer',function (data) {
+        stop = false;
+        countdownSec = 120;
+        score = 50;
+        start();
+        $('#drawer').html("De tekenaar is: " + data.drawer);
+    });
+
+    socket.on('stopTimer', function (data) {
+        stop = true;
+        if(data.word != "undefined"){
+            $("#chat").append("<b style='color:mediumvioletred'>Het woord was: " + data.word + " " + data.user + " was de eerste die het woord goed raadde en heeft " + data.points + " punten gekregen!<b></br>");
+        }
     });
 
     $(window).bind('beforeunload', function () {
         socket.emit('leaveRoom', {user: userId, room: roomId});
     });
-</script>
-<script>
-    var reset = 0;
-    var countdownSec = 120;
-    var score = 50;
-    var scoredisplay = 0;
-    var p1 = 0;
-    var p2 = 0;
-    var p3 = 0;
-    var p4 = 0;
-
-    $("#startknop").click(function () {
-        socket.emit('startGame', roomId);
-    });
-    function start() {
-        var min = Math.floor(countdownSec / 60);
-        var sec = countdownSec % 60;
-        if (reset == 0) {
-            setTimeout(function () {
-                countdownSec--;
-                score = (score - 0.4).toFixed(2);
-                scoredisplay = Math.floor(score);
-                socket.emit('tekenen', {room: roomId, lines: lines});
-                start();
-            }, 1000);
-            document.getElementById("output").innerHTML = "Time left: 0" + min + ":" + sec + "<br> Points: " + scoredisplay;
-        } else {
-            window.setTimeout(function () {
-                countdownSec = 120;
-                score = 50;
-                scoredisplay = 0;
-                reset = 0;
-                alert("time's up");
-                start();
-            }, 5000);
-        }
-    }
-    function setScore() {
-        p1 += scoredisplay;
-        reset = 1;
-        document.getElementById("scores").innerHTML =
-                "player 1: " + p1 + " pts <br> player 2: " + p2 + " pts <br> player 3: " + p3 + " pts <br> player 4: " + p4 + " pts ";
-    }
 </script>

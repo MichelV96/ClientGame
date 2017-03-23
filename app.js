@@ -41,8 +41,8 @@ io.sockets.on('connection', function(client) {
 
     //als iemand een room joint
     client.on('joinRoom', function(data){
-        if(Room.array.length == 0 || Room.array[data.room] == undefined){
-            //kamer bestaat niet dus weg
+        if(Room.array.length == 0 || Room.array[data.room] == undefined || Room.array[data.room].started){
+            //kamer bestaat niet of is gestart dus weg
             client.emit("fullRoom");
         }else {
             var user = data.user;
@@ -56,7 +56,6 @@ io.sockets.on('connection', function(client) {
                 client.broadcast.emit('refreshRooms', Room.array);
             }
         }
-        console.log("De tekenaar heeft id: " + Room.array[room].players[Room.array[room].drawer]);
     });
     //als iemand een chat bericht verstuurt
     client.on('chatBericht', function (data) {
@@ -64,19 +63,26 @@ io.sockets.on('connection', function(client) {
         var roomId = data.room;
         var user = data.user;
         console.log("HET WOORD IS: " + Room.array[roomId].woord);
-        //controleren als de message overeen komt met het woord dat geraden moet wroden
-        if(message.toLowerCase() == Room.array[roomId].woord ){
-            console.log("HET WOORD IS GERADEN");
+        //controleren als de message overeen komt met het woord dat geraden moet worden en of de tekenaar het niet zegt
+        if(message.toLowerCase() == Room.array[roomId].woord && user != Room.array[roomId].players[ Room.array[roomId].drawer]){
+            console.log("HET WOORD IS GERADEN " + Room.array[roomId].score );
+            clearInterval(Room.array[roomId].timer);
+            Room.array[roomId].countdownSec = 120;
+            Room.array[roomId].started = false;
+            Room.array[roomId].nextDrawer();
+
+            for(var i=0; i<Room.array[roomId].players.length; i++){
+                io.to(Room.array[roomId].players[i]).emit("stopTimer", {word: message, user: user, points: Room.array[roomId].score });
+            }
         }
         for(var i=0; i<Room.array[roomId].players.length; i++){
             io.to(Room.array[roomId].players[i]).emit("chat", message);
         }
-        Room.array[roomId].startTimer(io, Room.array[roomId].players);
     });
 
     client.on('leaveRoom', function (data) {
-       var room = data.room;
-       var user = data.user;
+        var room = data.room;
+        var user = data.user;
        //als het element bestaat in de array en checken of de room wel bestaat
        if(Room.array[room] != undefined && Room.array[room].players.indexOf(user) > -1){
            //verwijder het element uit de array
@@ -86,12 +92,21 @@ io.sockets.on('connection', function(client) {
     });
 
     client.on('startGame', function (data) {
-       Room.array[data].startTimer(io, Room.array[data].players);
+       Room.array[data].startGame(io);
+        Room.array[data].started = true;
+        for(var i=0; i<Room.array[data].players.length; i++){
+            io.to(Room.array[data].players[i]).emit("startTimer", {drawer: Room.array[data].players[Room.array[data].drawer]});
+        }
+        console.log(Room.array[data].score);
     });
 
     client.on('tekenen', function (data) {
         var room = data.room;
-        var lines = data.lines;
-        Room.array[room].lines = lines;
+        if(Room.array[room])
+        for(var i=0; i<Room.array[room].players.length; i++){
+            if(i != Room.array[room].drawer){
+                io.to(Room.array[room].players[i]).emit("tekening", {x: data.x, y: data.y, color: data.color, size: data.size});
+            }
+        }
     });
 });
