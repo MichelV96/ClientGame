@@ -1,5 +1,3 @@
-
-
 //Gum, zet kleur op wit
 var eraser = function () {
     pencilColor = "white";
@@ -43,7 +41,10 @@ var buttonControl = function() {
 
 //Clear het canvas en maak array leeg
 var clearCanvas = function () {
-    lines = [];
+    ArrayX = [];
+    ArrayY = [];
+    ArrayColor = [];
+    ArraySize = [];
     context.clearRect(0, 0, canvasWidth, canvasHeight);
     pencilColor = "black";
 }
