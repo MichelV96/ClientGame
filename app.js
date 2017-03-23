@@ -67,9 +67,10 @@ io.sockets.on('connection', function(client) {
         if(message.toLowerCase() == Room.array[roomId].woord ){
             console.log("HET WOORD IS GERADEN");
         }
-        for(i=0; i<Room.array[roomId].players.length; i++){
+        for(var i=0; i<Room.array[roomId].players.length; i++){
             io.to(Room.array[roomId].players[i]).emit("chat", message);
         }
+        Room.array[roomId].startTimer(io, Room.array[roomId].players);
     });
 
     client.on('leaveRoom', function (data) {
@@ -81,5 +82,15 @@ io.sockets.on('connection', function(client) {
            Room.array[room].players.splice(Room.array[room].players.indexOf(user), 1);
            client.broadcast.emit('refreshRooms', Room.array);
        }
+    });
+
+    client.on('startGame', function (data) {
+       Room.array[data].startTimer(io, Room.array[data].players);
+    });
+
+    client.on('tekenen', function (data) {
+        var room = data.room;
+        var lines = data.lines;
+        Room.array[room].lines = lines;
     });
 });

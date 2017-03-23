@@ -34,7 +34,7 @@ $('#canvas').mousedown(function (e) {
     //Zet paint op true
     paint = true;
     createLine(mouseX, mouseY);
-    DrawOnCanvas();
+    DrawOnCanvas(lines);
 });
 
 //Wanneer de muis beweegt, en muis ingedrukt is, roep de teken methode aan
@@ -45,7 +45,7 @@ $('#canvas').mousemove(function (e) {
         var mouseY = e.pageY - this.offsetTop;
 
         createLine(mouseX, mouseY);
-        DrawOnCanvas();
+        DrawOnCanvas(lines);
     }
 });
 
@@ -63,10 +63,10 @@ $('#canvas').mouseleave(function (e) {
 var createLine = function (x, y) {
     var line = {"x": x, "y": y, "color": pencilColor, "size": pencilWidth};
     lines.push(line);
-}
+};
 
 //Tekenen op het canvas
-var DrawOnCanvas = function () {
+var DrawOnCanvas = function (lines) {
     //Zet de positie op 0
     context.clearRect(0, 0, canvasWidth, canvasHeight);
 
@@ -91,5 +91,5 @@ var DrawOnCanvas = function () {
         context.closePath();
         context.stroke();
     }
-}
+};
 
