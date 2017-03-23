@@ -1,3 +1,4 @@
+
 //Breedte en hoogte van de canvas
 var canvasWidth = 900;
 var canvasHeight = 400;
@@ -37,7 +38,7 @@ $('#canvas').mousedown(function (e) {
     //Zet paint op true
     paint = true;
     createLine(mouseX, mouseY);
-    DrawOnCanvas();
+    DrawOnCanvas(lines);
 });
 
 //Wanneer de muis beweegt, en muis ingedrukt is, roep de teken methode aan
@@ -48,7 +49,7 @@ $('#canvas').mousemove(function (e) {
         var mouseY = e.pageY - this.offsetTop;
 
         createLine(mouseX, mouseY);
-        DrawOnCanvas();
+        DrawOnCanvas(lines);
     }
 });
 
@@ -71,7 +72,7 @@ var createLine = function (x, y) {
 }
 
 //Tekenen op het canvas
-var DrawOnCanvas = function () {
+var DrawOnCanvas = function (lines) {
     //Zet de positie op 0
     context.clearRect(0, 0, canvasWidth, canvasHeight);
 
@@ -96,5 +97,4 @@ var DrawOnCanvas = function () {
         context.closePath();
         context.stroke();
     }
-}
-
+};
