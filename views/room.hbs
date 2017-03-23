@@ -5,24 +5,20 @@
     <div class="leftpanel">
         <div class="paintPanel">
             <div class="box one">
-                <div class="buttons-left">
-                    <button id="bigger" onclick="bigger()">++</button>
-                    <button id="smaller" onclick="smaller()">--</button>
-                </div>
-                <div class="buttons-right">
-                    <button onclick="clearCanvas()">Clear</button>
-                    <button onclick="eraser()">Eraser</button>
-                </div>
-
+                <button id="bigger" onclick="bigger()">++</button>
+                <button id="smaller" onclick="smaller()">--</button>
+                <button onclick="clearCanvas()">Clear</button>
             </div>
             <div class="box two">
-                <p id="black" class="colorSquare"></p>
-                <p id="purple" class="colorSquare"></p>
-                <p id="blue" class="colorSquare"></p>
-                <p id="orange" class="colorSquare"></p>
-                <p id="red" class="colorSquare"></p>
-                <p id="yellow" class="colorSquare"></p>
-                <p id="green" class="colorSquare"></p>
+                <div id="black" class="colorSquare"></div>
+                <div id="purple" class="colorSquare"></div>
+                <div id="blue" class="colorSquare"></div>
+                <div id="orange" class="colorSquare"></div>
+                <div id="red" class="colorSquare"></div>
+                <div id="yellow" class="colorSquare"></div>
+                <div id="green" class="colorSquare"></div>
+                <div id="eraser" onclick="eraser()"></div>
+
             </div>
 
             <!--Hier wordt de canvas getekend d.m.v. javascript-->
