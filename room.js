@@ -30,7 +30,9 @@ var Room = function(name) {
             countdownSec--;
             console.log(countdownSec);
             for(var i=0; i<players.length; i++){
-                io.to(players[i]).emit("tekening", lines);
+                if(i != this.drawer){
+                    io.to(players[i]).emit("tekening", this.lines);
+                }
             }
         }, 1000);
     };

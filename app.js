@@ -56,6 +56,7 @@ io.sockets.on('connection', function(client) {
                 client.broadcast.emit('refreshRooms', Room.array);
             }
         }
+        console.log("De tekenaar heeft id: " + Room.array[room].players[Room.array[room].drawer]);
     });
     //als iemand een chat bericht verstuurt
     client.on('chatBericht', function (data) {
