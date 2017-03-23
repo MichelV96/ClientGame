@@ -1,15 +1,78 @@
 <img src="/images/background.jpg" class="background" alt="">
-<h1>Welkom in de Room</h1>
-<button onclick='woordCheck(document.getElementById("test1").value.toLowerCase());'>Test</button>
+<!--<h1>Welkom in de Room</h1>-->
+<!--<button onclick='woordCheck(document.getElementById("test1").value.toLowerCase());'>Test</button>-->
+<div class="wrapper">
+<div class="leftpanel">
+    <div class="paintPanel">
+    </div>
+    <div class="hostPrivileges">
+        <script>
+            var reset = 0;
+            var countdownSec = 120;
+            var score = 50;
+            var scoredisplay = 0;
 
-<div id="room_div">
-    <div id="chat_wrapper">
+            var p1 = 0;
+            var p2 = 0;
+            var p3 = 0;
+            var p4 = 0;
+
+            function start(){
+                $('#startknop').hide();
+                var min = Math.floor(countdownSec / 60);
+                var sec = countdownSec % 60;
+                if(reset == 0) {
+                    setTimeout(function () {
+                        countdownSec--;
+                        score = (score - 0.4).toFixed(2);
+                        scoredisplay = Math.floor(score);
+                        start();
+                    }, 1000);
+                    document.getElementById("output").innerHTML = "Time left: 0" + min + ":" + sec + "<br> Points: " + scoredisplay;
+                }else{
+                    window.setTimeout(function(){
+                        countdownSec = 120;
+                        score = 50;
+                        scoredisplay = 0;
+                        reset = 0;
+                        alert("time's up");
+                        start();
+                    },5000);
+                }
+            }
+            function setScore(){
+                p1 += scoredisplay;
+                reset = 1;
+                document.getElementById("scores").innerHTML =
+                        "player 1: "+ p1 + " pts <br> player 2: " + p2 + " pts <br> player 3: " + p3 + " pts <br> player 4: " + p4 +" pts ";
+            }
+        </script>
+        <!--If player = host-->
+        <button class="button" onclick="start()" id="startknop">Start</button>
+        <button class="button" onclick="setScore()">Kick Player</button>
+        <button class="button">Abandon Room</button>
+        <!--else-->
+        <!--Leave Room-->
+    </div>
+</div>
+<div class="rightpanel">
+    <div class="scoreboard">
+        <p id="output" class="timerpts">Time left: 02:00 Points: 100</p>
+        <p id="scores" class="scores">
+            player 1: 0 pts <br>
+            player 2: 0 pts <br>
+            player 3: 0 pts <br>
+            player 4: 0 pts
+        </p>
+    </div>
+    <div class="chat_wrapper">
         <div id="chat"></div>
         <form id="chat_form">
             <p><textarea id="message"></textarea> <input type="submit" value="verstuur" /></p>
         </form>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -46,3 +109,4 @@
     });
 
 </script>
+</div>

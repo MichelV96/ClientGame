@@ -52,9 +52,9 @@
                 //naam van de room en een button maken voor elke room de value is de plek in de array
                 $('#room_div').append("<div class='roomline'><p class='name'>"+ data[i]['name'] + "</p>  <div class='roomlineRight'><button onclick='joinRoom("+[i]+")' id='join_room' class='button'>Join room</button> <b style='color:green' class='amount'>"+data[i].players.length+"/4</b></div></div>");
             }else if(data[i].players.length == 3){
-                $('#room_div').append("<div class='roomline'><p class='name'>"+ data[i]['name'] + "</p>  <button onclick='joinRoom("+[i]+")' id='join_room' class='button'>Join room</button> <b style='color:darkorange' class='amount'>"+data[i].players.length+"/4</b></div>");
+                $('#room_div').append("<div class='roomline'><p class='name'>"+ data[i]['name'] + "</p>  <div class='roomlineRight'><button onclick='joinRoom("+[i]+")' id='join_room' class='button'>Join room</button> <b style='color:darkorange' class='amount'>"+data[i].players.length+"/4</b></div></div>");
             }else {
-                $('#room_div').append("<div class='roomline'><p class='name'>"+data[i]['name'] + "</p>   <b style='color:red'>"+data[i].players.length+"/4</b> </br></div>");
+                $('#room_div').append("<div class='roomline'><p class='name'>"+data[i]['name'] + "</p>   <div class='roomlineRight'><div style='width: 20px;'></div> <b style='color:red' class='amount'>"+data[i].players.length+"/4</b> </div></div>");
 
             }
         }
@@ -63,7 +63,11 @@
     $('#room').submit(function(e){
         e.preventDefault();
         //de value van de input
-        var roomName = $('#roomName').val();
+        if($('#roomName').val() == ''){
+            var roomName = "Anonymous Room"
+        }else {
+            var roomName = $('#roomName').val();
+        }
         //input sturen naar de server en daar opslaan
         socket.emit('room', roomName);
     });
