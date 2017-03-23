@@ -1259,3 +1259,5 @@ node_modules/ultron/.travis.yml
 node_modules/utils-merge/.travis.yml
 node_modules/ws/.npmignore
 node_modules/ws/.travis.yml
+.idea/clientProj2.iml
+jquery.js
