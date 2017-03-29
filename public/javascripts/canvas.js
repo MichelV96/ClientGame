@@ -1,4 +1,3 @@
-
 //Breedte en hoogte van de canvas
 var canvasWidth = 900;
 var canvasHeight = 400;
@@ -6,6 +5,7 @@ var canvasHeight = 400;
 //Maak arrays aan voor de lijnen
 var ArrayX = [];
 var ArrayY = [];
+var Draggable = [];
 var ArrayColor = [];
 var ArraySize = [];
 
@@ -37,7 +37,7 @@ $('#canvas').mousedown(function (e) {
 
     //Zet paint op true
     paint = true;
-    createLine(mouseX, mouseY);
+    createLine(mouseX, mouseY, false);
     DrawOnCanvas();
 });
 
@@ -48,7 +48,7 @@ $('#canvas').mousemove(function (e) {
         var mouseX = e.pageX - this.offsetLeft;
         var mouseY = e.pageY - this.offsetTop;
 
-        createLine(mouseX, mouseY);
+        createLine(mouseX, mouseY, true);
         DrawOnCanvas();
     }
 });
@@ -64,9 +64,10 @@ $('#canvas').mouseleave(function (e) {
 });
 
 //Maak een json object van een lijn en zet deze in een array
-var createLine = function (x, y) {
+var createLine = function (x, y, draggable) {
     ArrayX.push(x);
     ArrayY.push(y);
+    Draggable.push(draggable);
     ArrayColor.push(pencilColor);
     ArraySize.push(pencilWidth);
 }
@@ -88,12 +89,17 @@ var DrawOnCanvas = function () {
 
         //Begin van de lijn
         context.beginPath();
+        if (Draggable[i] && i) {
+            context.moveTo(ArrayX[i - 1], ArrayY[i - 1]);
+        } else {
+            context.moveTo(ArrayX[i] - 1, ArrayY[i] - 1);
+        }
 
         //Stel de coordinaten in voor het trekken van de lijn
-        context.moveTo(ArrayX[i] - 1, ArrayY[i] - 1);
+
 
         //Tekenen van de lijn
-        context.lineTo(ArrayX[i], ArrayY[i] );
+        context.lineTo(ArrayX[i], ArrayY[i]);
         context.closePath();
         context.stroke();
     }

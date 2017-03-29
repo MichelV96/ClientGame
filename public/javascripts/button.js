@@ -46,6 +46,8 @@ var clearCanvas = function () {
     ArrayY = [];
     ArrayColor = [];
     ArraySize = [];
+    Draggable = [];
     context.clearRect(0, 0, canvasWidth, canvasHeight);
     pencilColor = "black";
+    pencilWidth = 20;
 }
