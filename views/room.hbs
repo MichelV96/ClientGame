@@ -2,10 +2,10 @@
 <!--<button onclick='woordCheck(document.getElementById("test1").value.toLowerCase());'>Test</button>-->
 <div class="wrapper">
     <div class="leftpanel">
-        <div class="paintPanel">
+        <div class="paintPanel" id="panelSize">
             <div class="welcome">
                 <h1 id="title">Welkom in de Room</h1>
-                <p id="drawer" style="color:royalblue"></p>
+                <p id="drawer" style="color:royalblue;"></p>
                 <hr>
             </div>
             <div class="box">
@@ -27,8 +27,9 @@
                     <button class="button" onclick="clearCanvas()">Clear</button>
                 </div>
             </div>
+            <hr class="line">
             <!--Hier wordt de canvas getekend d.m.v. javascript-->
-            <div id="canvasDiv" class="box three"></div>
+            <div id="canvasDiv" class="boxthree"></div>
 
         </div>
         <div class="hostPrivileges">
@@ -43,13 +44,12 @@
     <div class="rightpanel">
         <div class="scoreboard">
             <p id="output" class="timerpts">Time left: 02:00 Points: 100</p>
-            <p id="scores" class="scores">
-            </p>
+            <div id="scores" class="scores"></div>
         </div>
         <div class="chat_wrapper">
             <div id="chat"></div>
             <form id="chat_form">
-                <p><textarea id="message"></textarea> <input type="submit" value="verstuur"/></p>
+                <textarea id="message"></textarea> <input class="button" type="submit" value="Verstuur"/>
             </form>
         </div>
         <div id="tekenen">

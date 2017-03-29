@@ -110,6 +110,7 @@ io.sockets.on('connection', function(client) {
         for(var i=0; i<Room.array[room].players.length; i++){
             io.to(Room.array[room].players[i]).emit("roomData", Room.array[room] );
         }
+
     });
 
     client.on('startGame', function (data) {

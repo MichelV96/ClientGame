@@ -1,6 +1,6 @@
 //Breedte en hoogte van de canvas
-var canvasWidth = window.innerWidth * 0.6;
-var canvasHeight = window.innerHeight * 0.6;
+var canvasWidth = document.getElementById('panelSize').offsetWidth*0.9;
+var canvasHeight = document.getElementById('panelSize').offsetHeight*0.6;
 
 //Maak arrays aan voor de lijnen
 var ArrayX = [];
@@ -131,10 +131,8 @@ var DrawOnCanvas = function () {
 
 //Pas canvas aan wanneer window grootte verandert
 $(window).resize(function () {
-    //Haal window grootte op
-    canvasHeight = window.innerHeight * 0.6;
-    canvasWidth = window.innerWidth * 0.6;
-
+    var canvasWidth = document.getElementById('panelSize').offsetWidth*0.9;
+    var canvasHeight = document.getElementById('panelSize').offsetHeight*0.6;
     //Pas canvas aan
     canvas.setAttribute('width', canvasWidth);
     canvas.setAttribute('height', canvasHeight);
