@@ -1,6 +1,6 @@
 //Breedte en hoogte van de canvas
-var canvasWidth = 900;
-var canvasHeight = 400;
+var canvasWidth = window.innerWidth * 0.6;
+var canvasHeight = window.innerHeight * 0.6;
 
 //Maak arrays aan voor de lijnen
 var ArrayX = [];
@@ -17,6 +17,11 @@ var pencilColor = "black";
 var pencilShape = "round";
 var pencilWidth = 20;
 
+//Onthoud de laatst geselecteerde kleur
+//Dit is voor als de gum middle mouse wordt gebruikt
+//Als deze is lostgelaten dan wordt de normale kleur weer geselecteerd
+var lastPencilColor = "black";
+
 //Aanmaken van het canvas
 var canvasDiv = document.getElementById('canvasDiv');
 canvas = document.createElement('canvas');
@@ -31,6 +36,16 @@ context = canvas.getContext("2d");
 
 //Wanneer muis is ingedrukt
 $('#canvas').mousedown(function (e) {
+    //1 = left mouse
+    //2 = middle mouse
+    if (e.which == 2) {
+        pencilColor = "white";
+        e.preventDefault();
+    } else if (e.which == 1) {
+        pencilColor = lastPencilColor;
+        e.preventDefault();
+    }
+    
     //Bepaal positie van de muis
     var mouseX = e.pageX - this.offsetLeft;
     var mouseY = e.pageY - this.offsetTop;
@@ -43,6 +58,15 @@ $('#canvas').mousedown(function (e) {
 
 //Wanneer de muis beweegt, en muis ingedrukt is, roep de teken methode aan
 $('#canvas').mousemove(function (e) {
+    //1 = left mouse
+    //2 = middle mouse
+    if (e.which == 2) {
+        pencilColor = "white";
+        e.preventDefault();
+    } else if (e.which == 1) {
+        pencilColor = lastPencilColor;
+        e.preventDefault();
+    }
     if (paint) {
         //Bepaal positie van de muis
         var mouseX = e.pageX - this.offsetLeft;
@@ -104,3 +128,17 @@ var DrawOnCanvas = function () {
         context.stroke();
     }
 };
+
+//Pas canvas aan wanneer window grootte verandert
+$(window).resize(function () {
+    //Haal window grootte op
+    canvasHeight = window.innerHeight * 0.6;
+    canvasWidth = window.innerWidth * 0.6;
+
+    //Pas canvas aan
+    canvas.setAttribute('width', canvasWidth);
+    canvas.setAttribute('height', canvasHeight);
+
+    //Maak canvas leeg
+    clearCanvas();
+});

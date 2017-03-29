@@ -35,4 +35,5 @@ $('#black').click(function () {
 
 var changePencil = function() {
     $('#canvas').css("cursor", "url('../images/pencil.png'), pointer")
+    lastPencilColor = pencilColor;
 }
