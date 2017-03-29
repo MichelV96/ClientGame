@@ -72,7 +72,10 @@
                     p1 += scoredisplay;
                     reset = 1;
                     document.getElementById("scores").innerHTML =
-                            "player 1: " + p1 + " pts <br> player 2: " + p2 + " pts <br> player 3: " + p3 + " pts <br> player 4: " + p4 + " pts ";
+                            "<div class='scorenames'><img src='images/goldmedal.png'><p> player 1: " + p1 + " pts </p></div>" +
+                            "<div class='scorenames'><img src='images/silvermedal.png'><p> player 2: " + p2 + " pts </p></div>" +
+                            "<div class='scorenames'><img src='images/bronzemedal.png'><p> player 3: " + p3 + " pts </p></div>" +
+                            "<div class='scorenames'><img src='images/nomedal.png'><p> player 4: " + p4 + " pts </p></div>";
                 }
             </script>
             <!--If player = host-->
@@ -86,12 +89,12 @@
     <div class="rightpanel">
         <div class="scoreboard">
             <p id="output" class="timerpts">Time left: 02:00 Points: 100</p>
-            <p id="scores" class="scores">
-                player 1: 0 pts <br>
-                player 2: 0 pts <br>
-                player 3: 0 pts <br>
-                player 4: 0 pts
-            </p>
+            <div id="scores" class="scores">
+                <div class='scorenames'><img src='images/nomedal.png'><p> player 1: 0 pts </p></div>
+                <div class='scorenames'><img src='images/nomedal.png'><p> player 1: 0 pts </p></div>
+                <div class='scorenames'><img src='images/nomedal.png'><p> player 1: 0 pts </p></div>
+                <div class='scorenames'><img src='images/nomedal.png'><p> player 1: 0 pts </p></div>
+            </div>
         </div>
         <div class="chat_wrapper">
             <div id="chat"></div>
