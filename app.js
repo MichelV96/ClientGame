@@ -79,6 +79,7 @@ io.sockets.on('connection', function(client) {
             for(var i=0; i<Room.array[roomId].players.length; i++){
                 io.to(Room.array[roomId].players[i]).emit("stopTimer", {word: message, user: user, points: Room.array[roomId].score });
             }
+            io.to(user).emit("gewonnen");
             Room.array[roomId].nextDrawer();
 
             //elke speler in de room de nieuwe room data geven
@@ -94,22 +95,24 @@ io.sockets.on('connection', function(client) {
     client.on('leaveRoom', function (data) {
         var room = data.room;
         var user = data.user;
+
        //als het element bestaat in de array en checken of de room wel bestaat
        if(Room.array[room] != undefined && Room.array[room].players.indexOf(user) > -1){
            //verwijder het element uit de array
            Room.array[room].players.splice(Room.array[room].players.indexOf(user), 1);
-       }
-       //checken of de room nu leeg is
-        if(Room.array[room].players.length == 0){
-           //room verwijderen uit de array
-           Room.array.splice(room, 1);
-        }
-        client.broadcast.emit('refreshRooms', Room.array);
 
-        //elke speler in de room de nieuwe room data geven
-        for(var i=0; i<Room.array[room].players.length; i++){
-            io.to(Room.array[room].players[i]).emit("roomData", Room.array[room] );
-        }
+           //checken of de room nu leeg is
+           if(Room.array[room].players.length == 0){
+               //room verwijderen uit de array
+               Room.array.splice(room, 1);
+           }else{
+               //elke speler in de room de nieuwe room data geven
+               for(var i=0; i<Room.array[room].players.length; i++){
+                   io.to(Room.array[room].players[i]).emit("roomData", Room.array[room] );
+               }
+           }
+       }
+        client.broadcast.emit('refreshRooms', Room.array);
     });
 
     client.on('startGame', function (data) {

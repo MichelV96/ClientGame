@@ -17,7 +17,6 @@
 <script>
     var socket = io.connect('http://localhost:4200');
     var userId;
-    var playersAmount = 0;
     socket.on('connect', function(data) {
         //id van de client
         userId = socket.io.engine.id;
@@ -27,22 +26,22 @@
 
 
     socket.on('refreshRooms', function (data) {
-    var roomsAmount = data.length;
-    if(roomsAmount != 0) {
-        $('#room_amount').html(roomsAmount);
-    }else{
-        $('#room_amount').html(0);
-    }
-
-
-    for(p in data){
-            playersAmount += data[p].players.length;
+        var roomsAmount = data.length;
+        if(roomsAmount != 0) {
+            $('#room_amount').html(roomsAmount);
+        }else{
+            $('#room_amount').html(0);
         }
-    if(playersAmount != 0) {
-        $('#player_amount').html(playersAmount);
-    }else{
-        $('#player_amount').html(0);
-    }
+
+        var playersAmount = 0;
+        for(p in data){
+                playersAmount += data[p].players.length;
+            }
+        if(playersAmount != 0) {
+            $('#player_amount').html(playersAmount);
+        }else{
+            $('#player_amount').html(0);
+        }
 
         //de div leegmaken en alles weer opnieuw inladen
         $('#room_div').empty();

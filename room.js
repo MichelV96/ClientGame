@@ -30,7 +30,7 @@ var Room = function(name) {
        this.timer = setInterval(function () {
            _this.countdownSec--;
             _this.score = (_this.score - 0.4).toFixed(2);
-            console.log(_this.countdownSec);
+            //console.log(_this.countdownSec);
            if(_this.countdownSec == 0){
                clearInterval(this);
                for(var i=0; i<_this.players.length; i++){

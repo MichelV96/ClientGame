@@ -1,5 +1,21 @@
+<audio id="winSound">
+    <source src="images/claps.mp3" type="audio/mpeg">
+</audio>
 <img src="/images/background.jpg" class="background" alt="">
 <!--<button onclick='woordCheck(document.getElementById("test1").value.toLowerCase());'>Test</button>-->
+<div id="winnersText">
+    <svg width="600" height="200">
+        <text x="300" y="125" text-anchor="middle">
+            <tspan id="l1">Y</tspan>
+            <tspan id="l2">O</tspan>
+            <tspan id="l3">U</tspan>
+            <tspan id="l3">-</tspan>
+            <tspan id="l4">W</tspan>
+            <tspan id="l5">I</tspan>
+            <tspan id="l6">N</tspan>
+        </text>
+    </svg>
+</div>
 <div class="wrapper">
     <div class="leftpanel">
         <div class="paintPanel">
@@ -67,6 +83,7 @@
 <script>
     var socket = io.connect('http://localhost:4200');
     var userId;
+
     socket.on('connect', function (data) {
         //id van de client
         userId = socket.io.engine.id;
@@ -98,13 +115,21 @@
         stop = false;
         countdownSec = 120;
         score = 50;
+        clearCanvas();
         start();
+        $("#winnersText").css("display", "none");
+        $("#chat").append("<b style='color:crimson'>Het spel is begonnen raad het woord in de chat!<b></br>");
     });
 
     socket.on('stopTimer', function (data) {
         stop = true;
         if(data.word != "undefined"){
+            $('#winSound').trigger("play");
             $("#chat").append("<b style='color:mediumvioletred'>Het woord was: " + data.word + " " + data.user + " was de eerste die het woord goed raadde en heeft " + data.points + " punten gekregen!<b></br>");
         }
+    });
+
+    socket.on("gewonnen",  function () {
+        $("#winnersText").css("display", "unset");
     });
 </script>
