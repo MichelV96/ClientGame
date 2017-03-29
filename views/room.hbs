@@ -1,5 +1,21 @@
+<audio id="winSound">
+    <source src="images/claps.mp3" type="audio/mpeg">
+</audio>
 <img src="/images/background.jpg" class="background" alt="">
 <!--<button onclick='woordCheck(document.getElementById("test1").value.toLowerCase());'>Test</button>-->
+<div id="winnersText">
+    <svg width="600" height="200">
+        <text x="300" y="125" text-anchor="middle">
+            <tspan id="l1">Y</tspan>
+            <tspan id="l2">O</tspan>
+            <tspan id="l3">U</tspan>
+            <tspan id="l3">-</tspan>
+            <tspan id="l4">W</tspan>
+            <tspan id="l5">I</tspan>
+            <tspan id="l6">N</tspan>
+        </text>
+    </svg>
+</div>
 <div class="wrapper">
     <div class="leftpanel">
         <div class="paintPanel" id="panelSize">
@@ -12,6 +28,9 @@
                 <div class="boxone">
                     <button class="button" id="bigger" onclick="bigger()">++</button>
                     <button class="button" id="smaller" onclick="smaller()">--</button>
+                    <div id="dotSize" style="padding:5px;"></div>
+                </div>
+                <div class="boxtwo">
                     <div class="colordiv">
                         <div id="black" class="colorSquare"></div>
                         <div id="purple" class="colorSquare"></div>
@@ -20,30 +39,28 @@
                         <div id="red" class="colorSquare"></div>
                         <div id="yellow" class="colorSquare"></div>
                         <div id="green" class="colorSquare"></div>
-                        <div id="eraser" onclick="eraser()"></div>
+                        <div id="eraser" class="colorSquare" onclick="eraser()"></div>
                     </div>
                 </div>
-                <div class="boxtwo">
+                <div class="boxthree">
                     <button class="button" onclick="clearCanvas()">Clear</button>
                 </div>
             </div>
             <hr class="line">
             <!--Hier wordt de canvas getekend d.m.v. javascript-->
             <div id="canvasDiv" class="boxthree"></div>
-
         </div>
         <div class="hostPrivileges">
             <!--If player = host-->
             <button class="button" id="startknop">Start</button>
-            <button class="button" onclick="setScore()">Kick Player</button>
-            <button class="button">Abandon Room</button>
+            <button class="button">Leave Room</button>
             <!--else-->
             <!--Leave Room-->
         </div>
     </div>
     <div class="rightpanel">
         <div class="scoreboard">
-            <p id="output" class="timerpts">Time left: 02:00 Points: 100</p>
+            <div id="output" class="timerpts">Time left: 02:00 Points: 100</div>
             <div id="scores" class="scores"></div>
         </div>
         <div class="chat_wrapper">
@@ -60,6 +77,7 @@
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="javascripts/color.js"></script>
+<script src="javascripts/animation.js"></script>
 <script src="javascripts/canvas.js"></script>
 <script src="javascripts/button.js"></script>
 <script src="/socket.io/socket.io.js"></script>
@@ -67,6 +85,7 @@
 <script>
     var socket = io.connect('http://localhost:4200');
     var userId;
+
     socket.on('connect', function (data) {
         //id van de client
         userId = socket.io.engine.id;
@@ -98,13 +117,25 @@
         stop = false;
         countdownSec = 120;
         score = 50;
+        clearCanvas();
         start();
+        $("#winnersText").css("display", "none");
+        $("#chat").append("<b style='color:crimson'>Het spel is begonnen raad het woord in de chat!<b></br>");
     });
 
     socket.on('stopTimer', function (data) {
         stop = true;
         if(data.word != "undefined"){
+            $('#winSound').trigger("play");
             $("#chat").append("<b style='color:mediumvioletred'>Het woord was: " + data.word + " " + data.user + " was de eerste die het woord goed raadde en heeft " + data.points + " punten gekregen!<b></br>");
         }
+    });
+
+    socket.on("gewonnen",  function () {
+        $("#winnersText").css("display", "unset");
+    });
+
+    socket.on("plaatje",  function (data) {
+        $("#chat").append("<b style='color:coral'>Het woord dat je moet tekenen is: " +data+"<b></br>");
     });
 </script>

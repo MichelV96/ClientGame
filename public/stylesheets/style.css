@@ -1,15 +1,20 @@
-body {
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
 a {
     color: #00B7FF;
 }
-
+body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+canvas {
+    background-color: white;
+    cursor: url('../images/pencil.png'), pointer;
+    border: 5px solid black;
+}
 hr {
     margin: 0px;
 }
 
+
+/*alle classes*/
 .background {
     position: fixed;
     top: 0;
@@ -20,15 +25,207 @@ hr {
     width: 100%;
     height: 100%;
 }
-#scores img{
-  width:25px;
-  height:25px;
+.bottompart {
+    max-height: 400px;
+    overflow-y: auto;
 }
 
-#room {
+.bottompart::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+}
+
+.bottompart::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+.bottompart::-webkit-scrollbar-thumb {
+    background-color: #1561b4;
+}
+.box {
+    display: flex;
+    text-align: center;
+    padding-right: 1em;
+    justify-content: space-between;
+}
+.boxone{
+    font-family: "Lucida Sans Typewriter";
+    font-weight: bold;
+}
+.button {
+    border: solid #f09294 2px;
+    border-radius: 10px;
+    color: #f09294;
+    background-color: #1561b4;
+    font-family: "Lucida Sans Typewriter";
+    font-weight: bold;
+    height: 25px;
+}
+.button:hover {
+    background-color: #208dcd;
+}
+
+
+.chat_wrapper {
+    padding-top: 1vh;
+}
+.colordiv {
     margin: 1em;
 }
+.colorSquare {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    background-size: 50px 50px;
+}
+.colorSquare:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
 
+
+.hostPrivileges {
+    height: 4vh;
+    padding-left: 1em;
+    padding-right: 1em;
+    justify-content: center;
+}
+
+
+.imageIcon {
+    width: 200px;
+    height: 200px;
+    position: static;
+    float: right;
+}
+
+
+.line{
+    display:none;
+}
+.leftpanel {
+    width: 75vw;
+    min-width: 500px;
+}
+
+
+.maindiv {
+    margin: auto;
+    margin-top: 50px;
+    text-align: center;
+    background-color: lightgrey;
+    min-height: 500px;
+    width: 500px;
+    border: solid black 5px;
+}
+
+
+.name {
+    font-family: "Lucida Sans Typewriter";
+    height: 25px;
+    vertical-align: middle;
+    width: 50%;
+    text-transform: uppercase;
+}
+
+
+.paint{
+    padding:1em;
+}
+.paintPanel {
+    height: 90vh;
+}
+
+
+.rightpanel {
+    width: 20vw;
+    min-width: 175px;
+}
+.roomline {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.roomlineRight {
+    width: 50%;
+    height: 25px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2%;
+    margin-left: 1em;
+}
+
+
+.scoreboard {
+    height: 19vh;
+    padding:2px;
+    border: solid #f09294 2px;
+    border-radius: 10px;
+    color: #f09294;
+    background-color: #1561b4;
+    font-family: "Lucida Sans Typewriter";
+    font-weight: bold;
+    overflow: hidden;
+}
+.scores{
+    height:10vh;
+    overflow-y: auto;
+    width:100%;
+    padding:1em;
+}
+.scores::-webkit-scrollbar {
+    display:none;
+}
+
+
+.timerpts{
+    text-align: center;
+}
+.tooltip {
+    display: inline-flex;
+    margin: 5px;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    font-family: "Lucida Sans Typewriter";
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+.toppart {
+    border-bottom: solid black 5px;
+}
+
+
+.welcome {
+    padding: 1em;
+}
+.wrapper {
+    display: inline-flex;
+    border: solid black 5px;
+    background-color: lightgray;
+    padding:5px;
+}
+
+
+
+/*alle id's*/
+#canvasDiv{
+    text-align: center;
+}
 #chat {
     height: 45vh;
     overflow-y: scroll;
@@ -43,10 +240,7 @@ hr {
     color: #f09294;
     font-family: "Lucida Sans Typewriter";
     font-weight: bold;
-
-
 }
-
 #chat::-webkit-scrollbar {
     display:none;
 }
@@ -62,236 +256,49 @@ hr {
     margin-top:1vh;
     margin-bottom:1vh;
 }
-
-.tooltip {
-    display: inline-flex;
-    margin: 5px;
+#room {
+    margin: 1em;
 }
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    background-color: black;
-    color: #fff;
-    font-family: "Lucida Sans Typewriter";
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-}
-
-.maindiv {
-    margin: auto;
-    margin-top: 50px;
-    text-align: center;
-    background-color: lightgrey;
-    min-height: 500px;
-    width: 500px;
-    border: solid black 5px;
-}
-
-.imageIcon {
-    width: 200px;
-    height: 200px;
-    position: static;
+#startknop {
+    display: none;
     float: right;
-}
-
-.button {
-    border: solid #f09294 2px;
-    border-radius: 10px;
-    color: #f09294;
-    background-color: #1561b4;
-    font-family: "Lucida Sans Typewriter";
-    font-weight: bold;
-    height: 25px;
-}
-
-.button:hover {
-    background-color: #208dcd;
-}
-
-.toppart {
-    border-bottom: solid black 5px;
-}
-
-.bottompart {
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.bottompart::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #F5F5F5;
-}
-
-.bottompart::-webkit-scrollbar {
-    width: 10px;
-    background-color: #F5F5F5;
-}
-
-.bottompart::-webkit-scrollbar-thumb {
-    background-color: #1561b4;
-}
-
-.roomline {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 1em;
-    margin-right: 1em;
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
-
-.name {
-    font-family: "Lucida Sans Typewriter";
-    height: 25px;
-    vertical-align: middle;
-    width: 50%;
-    text-transform: uppercase;
-}
-
-.roomlineRight {
-    width: 50%;
-    height: 25px;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2%;
-    margin-left: 1em;
-}
-
-.wrapper {
-    display: inline-flex;
-    border: solid black 5px;
-    background-color: lightgray;
-    padding:5px;
-}
-
-.leftpanel {
-    width: 75vw;
-    min-width: 500px;
-}
-.welcome{
-    padding: 1em;
-}
-.hostPrivileges {
-    height: 4vh;
-    padding-left: 1em;
-    padding-right: 1em;
-    justify-content: center;
-}
-
-.rightpanel {
-    width: 20vw;
-    min-width: 175px;
-}
-
-.scoreboard {
-    height: 19vh;
-    padding:2px;
-    border: solid #f09294 2px;
-    border-radius: 10px;
-    color: #f09294;
-    background-color: #1561b4;
-    font-family: "Lucida Sans Typewriter";
-    font-weight: bold;
-    overflow-y: scroll;
-}
-.scoreboard::-webkit-scrollbar {
-    display:none;
-}
-
-.scoreboard p:first-child {
-    margin: 0px;
-    top: 0;
-    position: relative;
-    float: right;
-}
-
-.timerpts {
-    padding:2px;
-}
-
-.scorenames p{
-  margin:0;
-}
-
-.scorenames {
-  display:flex;
-  vertical-align: middle;
-}
-
-.chat_wrapper {
-    overflow: hidden;
-    height:73vh;
-    padding-top: 1vh;
-}
-
-
-
-canvas {
-    background-color: white;
-    cursor: url('../images/pencil.png'), pointer;
-    border: 5px solid black;
-
-}
-
-.colorSquare {
-    width: 20px;
-    height: 20px;
-    border: 1px solid black;
-    display: inline-block;
-}
-
-.colorSquare:hover {
-    opacity: 0.6;
-    cursor: pointer;
 }
 
 /*Kleuren*/
 #purple {
-    background-color: purple;
+    background-image: url("../images/pencil_purple.png");
 }
 
 #blue {
-    background-color: blue;
+    background-image: url("../images/pencil_blue.png");
 }
 
 #green {
-    background-color: green;
+    background-image: url("../images/pencil_green.png");
 }
 
 #yellow {
-    background-color: yellow;
+    background-image: url("../images/pencil_yellow.png");
 }
 
 #orange {
-    background-color: orange;
+    background-image: url("../images/pencil_orange.png");
 }
 
 #red {
-    background-color: red;
+    background-image: url("../images/pencil_red.png");
 }
 
 #blue {
-    background-color: blue;
+    background-image: url("../images/pencil_blue.png");
 }
 
 #black {
-    background-color: black;
+    background-image: url("../images/pencil_black.png");
 }
 
 #eraser {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    background-image: url("../images/eraserSmall.png");
+    background-image: url("../images/eraserRotate.png");
 }
 
 #eraser:hover {
@@ -299,52 +306,122 @@ canvas {
     cursor: pointer;
 }
 
-.paintPanel {
-    height: 90vh;
+/*Winnars annimatie*/
+@keyframes textAnim {
+    0% {
+        font-size: 80px;
+        fill: white;
+    }
+    10% {
+        font-size: 100px;
+        fill: red;
+    }
+    40% {
+        font-size: 70px;
+        fill: white;
+    }
+    100% {
+        font-size: 80px;
+        fill: white;
+    }
 }
 
-.line{
-    display:none;
-}
-.box {
-    display: flex;
-    text-align: center;
-    padding-right: 1em;
-    justify-content: space-between;
-}
-.boxthree{
-    padding:1em;
-}
-
-.colordiv{
-    display: flex;
-    margin: 1em;
-}
-
-.buttons-left {
-    float: left;
+@-webkit-keyframes textAnim {
+    0% {
+        font-size: 80px;
+        fill: white;
+    }
+    10% {
+        font-size: 100px;
+        fill: red;
+    }
+    40% {
+        font-size: 70px;
+        fill: orange;
+    }
+    100% {
+        font-size: 80px;
+        fill: white;
+    }
 }
 
-.buttons-right {
-    display: inline-block;
+text tspan {
+    font-family: Helvetica, Arial;
+    font-weight: 900;
+    animation: textAnim 2s ease infinite;
+    -webkit-animation: textAnim 2s ease infinite;
 }
-#startknop{
+
+#l2 {
+    animation-delay: .1s;
+    -webkit-animation-delay: .1s;
+}
+
+#l3 {
+    animation-delay: .2s;
+    -webkit-animation-delay: .2s;
+}
+
+#l4 {
+    animation-delay: .3s;
+    -webkit-animation-delay: .3s;
+}
+
+#l5 {
+    animation-delay: .4s;
+    -webkit-animation-delay: .4s;
+}
+
+#l6 {
+    animation-delay: .5s;
+    -webkit-animation-delay: .5s;
+}
+
+#winnersText {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border: solid #f09294 2px;
     display: none;
-    float: right;
+    background-color: #1561b4;
 }
 
+/*andere sizes*/
 @media screen and (max-width: 1080px) {
+    .box{
+        padding: 1em;
+    }
     .imageIcon {
         display: none;
+    }
+    .line{
+        display:block;
     }
     .welcome{
         display:none;
     }
-    .box{
-        padding: 1em;
+}
+
+@media screen and (max-width: 800px) , screen and (max-height: 600px) {
+    #canvasDiv{
+        text-align: center;
+    }
+    #chat{
+        height:40vh;
+    }
+    .colorSquare{
+        width:25px;
+        height: 25px;
+        background-size: 25px 25px;
     }
 
-    .line{
-        display:block;
+    #dotSize{
+        display: none;
+    }
+
+    .hostPrivileges{
+        height:auto;
     }
 }

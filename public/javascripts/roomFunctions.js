@@ -9,6 +9,7 @@ var p3 = 0;
 var p4 = 0;
 var userId;
 var roomId = location.search.split('roomid=')[1];
+var medals = ["goldmedal.png", "silvermedal.png", "bronzemedal.png", "nomedal.png"];
 
 $("#startknop").click(function () {
     socket.emit('startGame', roomId);
@@ -58,21 +59,23 @@ $(window).bind('beforeunload', function () {
 
 function setRoomData(data){
     var drawer = data['players'][data.drawer];
-    var medals = ["goldmedal.png", "silvermedal.png", "bronzemedal.png", "nomedal.png"];
+
+    var highestScore = 0;
 
     if(drawer == userId){
         $("#startknop").css("display", "unset");
     }else{
         $("#startknop").css("display", "none");
     }
-
     //score en spelers leegmaken
     $("#scores").empty();
     for (var i=0; i<data['players'].length; i++){
-        $("#scores").append("<img src='images/"+medals[i]+"'>" + " " + data['players'][i]);
         if(i == data.drawer){
-            $("#scores").append(" <b style='color:red'>Tekenaar</b>");
+            $("#scores").append("<b style='color:red'>" + data['players'][i] + "</b>");
+        }else{
+            $("#scores").append(data['players'][i]);
         }
+        $("#scores").append(" " + data['scores'][i] + " punten");
         $("#scores").append("</br>");
     }
 }

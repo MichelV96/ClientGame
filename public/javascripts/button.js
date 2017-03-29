@@ -1,7 +1,7 @@
 //Gum, zet kleur op wit
 var eraser = function () {
     pencilColor = "white";
-    $('#canvas').css("cursor", "url('../images/eraserBig.png'), pointer")
+    $('#canvas').css("cursor", "url('../images/eraser.png'), pointer")
 }
 
 //Grotere lijn
@@ -16,10 +16,10 @@ var bigger = function () {
 
 //Kleinere lijn
 var smaller = function () {
-    if (pencilWidth > 30) {
+    if (pencilWidth > 10) {
         pencilWidth -= 10;
     } else {
-        pencilWidth = 20;
+        pencilWidth = 10;
     }
     buttonControl();
 }
@@ -27,16 +27,26 @@ var smaller = function () {
 //Show/hide size buttons
 var buttonControl = function() {
     if(pencilWidth == 100) {
-        $('#bigger').hide();
+        $('#bigger').css('background-color', 'red');
+        $('#bigger').css('color', 'white');
+        $('#bigger').css('border-color', 'white');
     } else {
-        $('#bigger').show();
+        $('#bigger').css('background-color', '#1561b4')
+        $('#bigger').css('color', '#f09294')
+        $('#bigger').css('border-color', '#f09294')
     }
 
-    if (pencilWidth == 20) {
-        $('#smaller').hide();
+    if (pencilWidth == 10) {
+        $('#smaller').css('background-color', 'red');
+        $('#smaller').css('color', 'white');
+        $('#smaller').css('border-color', 'white');
     } else {
-        $('#smaller').show();
+        $('#smaller').css('background-color', '#1561b4')
+        $('#smaller').css('color', '#f09294')
+        $('#smaller').css('border-color', '#f09294')
     }
+
+    changeDot();
 }
 
 
@@ -50,4 +60,11 @@ var clearCanvas = function () {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
     pencilColor = "black";
     pencilWidth = 20;
+    colorAnimation('#black');
+}
+
+
+var changeDot = function() {
+    dotSize = pencilWidth / 10;
+    $('#dotSize').text(dotSize + "/" + dotMaxSize);
 }
