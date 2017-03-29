@@ -236,10 +236,10 @@ canvas {
 }
 
 .colorSquare {
-    width: 20px;
-    height: 20px;
-    border: 1px solid black;
+    width: 50px;
+    height: 50px;
     display: inline-block;
+    background-size: 50px 50px;
 }
 
 .colorSquare:hover {
@@ -249,42 +249,39 @@ canvas {
 
 /*Kleuren*/
 #purple {
-    background-color: purple;
+    background-image: url("../images/pencil_purple.png");
 }
 
 #blue {
-    background-color: blue;
+    background-image: url("../images/pencil_blue.png");
 }
 
 #green {
-    background-color: green;
+    background-image: url("../images/pencil_green.png");
 }
 
 #yellow {
-    background-color: yellow;
+    background-image: url("../images/pencil_yellow.png");
 }
 
 #orange {
-    background-color: orange;
+    background-image: url("../images/pencil_orange.png");
 }
 
 #red {
-    background-color: red;
+    background-image: url("../images/pencil_red.png");
 }
 
 #blue {
-    background-color: blue;
+    background-image: url("../images/pencil_blue.png");
 }
 
 #black {
-    background-color: black;
+    background-image: url("../images/pencil_black.png");
 }
 
 #eraser {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    background-image: url("../images/eraserSmall.png");
+    background-image: url("../images/eraserRotate.png");
 }
 
 #eraser:hover {

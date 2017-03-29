@@ -17,10 +17,8 @@ var pencilColor = "black";
 var pencilShape = "round";
 var pencilWidth = 20;
 
-//Onthoud de laatst geselecteerde kleur
-//Dit is voor als de gum middle mouse wordt gebruikt
-//Als deze is lostgelaten dan wordt de normale kleur weer geselecteerd
-var lastPencilColor = "black";
+//Selecteer zwart
+colorAnimation('#black');
 
 //Aanmaken van het canvas
 var canvasDiv = document.getElementById('canvasDiv');
@@ -36,16 +34,6 @@ context = canvas.getContext("2d");
 
 //Wanneer muis is ingedrukt
 $('#canvas').mousedown(function (e) {
-    //1 = left mouse
-    //2 = middle mouse
-    if (e.which == 2) {
-        pencilColor = "white";
-        e.preventDefault();
-    } else if (e.which == 1) {
-        pencilColor = lastPencilColor;
-        e.preventDefault();
-    }
-    
     //Bepaal positie van de muis
     var mouseX = e.pageX - this.offsetLeft;
     var mouseY = e.pageY - this.offsetTop;
@@ -58,15 +46,6 @@ $('#canvas').mousedown(function (e) {
 
 //Wanneer de muis beweegt, en muis ingedrukt is, roep de teken methode aan
 $('#canvas').mousemove(function (e) {
-    //1 = left mouse
-    //2 = middle mouse
-    if (e.which == 2) {
-        pencilColor = "white";
-        e.preventDefault();
-    } else if (e.which == 1) {
-        pencilColor = lastPencilColor;
-        e.preventDefault();
-    }
     if (paint) {
         //Bepaal positie van de muis
         var mouseX = e.pageX - this.offsetLeft;
