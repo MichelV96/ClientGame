@@ -54,6 +54,12 @@ io.sockets.on('connection', function(client) {
                 //de user zijn id pushen in de array
                 Room.array[room].players.push(user);
                 client.broadcast.emit('refreshRooms', Room.array);
+
+                //elke speler in de room de nieuwe room data geven
+                for(var i=0; i<Room.array[room].players.length; i++){
+                    io.to(Room.array[room].players[i]).emit("roomData", Room.array[room] );
+                }
+
             }
         }
     });
@@ -69,10 +75,15 @@ io.sockets.on('connection', function(client) {
             clearInterval(Room.array[roomId].timer);
             Room.array[roomId].countdownSec = 120;
             Room.array[roomId].started = false;
-            Room.array[roomId].nextDrawer();
 
             for(var i=0; i<Room.array[roomId].players.length; i++){
                 io.to(Room.array[roomId].players[i]).emit("stopTimer", {word: message, user: user, points: Room.array[roomId].score });
+            }
+            Room.array[roomId].nextDrawer();
+
+            //elke speler in de room de nieuwe room data geven
+            for(var i=0; i<Room.array[roomId].players.length; i++){
+                io.to(Room.array[roomId].players[i]).emit("roomData", Room.array[roomId] );
             }
         }
         for(var i=0; i<Room.array[roomId].players.length; i++){
@@ -87,17 +98,26 @@ io.sockets.on('connection', function(client) {
        if(Room.array[room] != undefined && Room.array[room].players.indexOf(user) > -1){
            //verwijder het element uit de array
            Room.array[room].players.splice(Room.array[room].players.indexOf(user), 1);
-           client.broadcast.emit('refreshRooms', Room.array);
        }
+       //checken of de room nu leeg is
+        if(Room.array[room].players.length == 0){
+           //room verwijderen uit de array
+           Room.array.splice(room, 1);
+        }
+        client.broadcast.emit('refreshRooms', Room.array);
+
+        //elke speler in de room de nieuwe room data geven
+        for(var i=0; i<Room.array[room].players.length; i++){
+            io.to(Room.array[room].players[i]).emit("roomData", Room.array[room] );
+        }
     });
 
     client.on('startGame', function (data) {
        Room.array[data].startGame(io);
         Room.array[data].started = true;
         for(var i=0; i<Room.array[data].players.length; i++){
-            io.to(Room.array[data].players[i]).emit("startTimer", {drawer: Room.array[data].players[Room.array[data].drawer]});
+            io.to(Room.array[data].players[i]).emit("startTimer");
         }
-        console.log(Room.array[data].score);
     });
 
     client.on('tekenen', function (data) {

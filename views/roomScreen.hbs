@@ -17,6 +17,7 @@
 <script>
     var socket = io.connect('http://localhost:4200');
     var userId;
+    var playersAmount = 0;
     socket.on('connect', function(data) {
         //id van de client
         userId = socket.io.engine.id;
@@ -33,7 +34,7 @@
         $('#room_amount').html(0);
     }
 
-    var playersAmount = 0;
+
     for(p in data){
             playersAmount += data[p].players.length;
         }
