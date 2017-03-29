@@ -15,6 +15,7 @@ var WordEnum = [
 var Room = function(name) {
     this.name = name;
     this.players = [];
+    this.scores = [0,0,0,0];
     this.started = false;
     this.drawer = 0;
     this.score = 50;
@@ -30,6 +31,7 @@ var Room = function(name) {
        this.timer = setInterval(function () {
            _this.countdownSec--;
             _this.score = (_this.score - 0.4).toFixed(2);
+            Math.floor(_this.score);
             //console.log(_this.countdownSec);
            if(_this.countdownSec == 0){
                clearInterval(this);

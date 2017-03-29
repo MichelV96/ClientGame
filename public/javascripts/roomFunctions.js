@@ -60,12 +60,13 @@ $(window).bind('beforeunload', function () {
 function setRoomData(data){
     var drawer = data['players'][data.drawer];
 
+    var highestScore = 0;
+
     if(drawer == userId){
         $("#startknop").css("display", "unset");
     }else{
         $("#startknop").css("display", "none");
     }
-
     //score en spelers leegmaken
     $("#scores").empty();
     for (var i=0; i<data['players'].length; i++){
@@ -74,6 +75,7 @@ function setRoomData(data){
         }else{
             $("#scores").append("<img src='images/"+medals[i]+"'>" + " " + data['players'][i]);
         }
+        $("#scores").append(" " + data['scores'][i] + " punten");
         $("#scores").append("</br>");
     }
 }

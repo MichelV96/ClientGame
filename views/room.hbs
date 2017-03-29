@@ -134,4 +134,8 @@
     socket.on("gewonnen",  function () {
         $("#winnersText").css("display", "unset");
     });
+
+    socket.on("plaatje",  function (data) {
+        $("#chat").append("<b style='color:coral'>Het woord dat je moet tekenen is: " +data+"<b></br>");
+    });
 </script>
