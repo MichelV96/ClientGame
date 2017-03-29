@@ -20,10 +20,12 @@ hr {
     width: 100%;
     height: 100%;
 }
-#scores img{
-  width:25px;
-  height:25px;
+
+#scores img {
+    width: 25px;
+    height: 25px;
 }
+
 #room {
     margin: 1em;
 }
@@ -171,9 +173,11 @@ hr {
 .leftpanel {
     width: 75vw;
 }
-.welcome{
+
+.welcome {
     padding: 1em;
 }
+
 .hostPrivileges {
     background-color: #f09294;
     height: 20vh;
@@ -205,13 +209,13 @@ hr {
     background-color: red;
 }
 
-.scorenames p{
-  margin:0;
+.scorenames p {
+    margin: 0;
 }
 
 .scorenames {
-  display:flex;
-  vertical-align: middle;
+    display: flex;
+    vertical-align: middle;
 }
 
 .chat_wrapper {
@@ -219,7 +223,7 @@ hr {
     padding-right: 1vh;
     overflow: hidden;
     background-color: black;
-  height:80vh;
+    height: 80vh;
 }
 
 @media screen and (max-width: 1080px) {
@@ -300,7 +304,7 @@ canvas {
     justify-content: space-between;
 }
 
-.colordiv{
+.colordiv {
     display: flex;
     margin: 1em;
 }
@@ -312,46 +316,73 @@ canvas {
 .buttons-right {
     display: inline-block;
 }
-#startknop{
+
+#startknop {
     display: none;
     float: right;
 }
 
 /*Winnars annimatie*/
 @keyframes textAnim {
-    0% {font-size: 80px; fill: white;}
-    10% {font-size: 100px; fill: red;}
-    40% {font-size: 70px; fill: white;}
-    100% {font-size: 80px; fill: white;}
+    0% {
+        font-size: 80px;
+        fill: white;
+    }
+    10% {
+        font-size: 100px;
+        fill: red;
+    }
+    40% {
+        font-size: 70px;
+        fill: white;
+    }
+    100% {
+        font-size: 80px;
+        fill: white;
+    }
 }
 
 @-webkit-keyframes textAnim {
-    0% {font-size: 80px; fill: white;}
-    10% {font-size: 100px; fill: red;}
-    40% {font-size: 70px; fill: orange;}
-    100% {font-size: 80px; fill: white;}
+    0% {
+        font-size: 80px;
+        fill: white;
+    }
+    10% {
+        font-size: 100px;
+        fill: red;
+    }
+    40% {
+        font-size: 70px;
+        fill: orange;
+    }
+    100% {
+        font-size: 80px;
+        fill: white;
+    }
 }
 
-text tspan{
+text tspan {
     font-family: Helvetica, Arial;
     font-weight: 900;
     animation: textAnim 2s ease infinite;
     -webkit-animation: textAnim 2s ease infinite;
 }
 
-
 #l2 {
     animation-delay: .1s;
     -webkit-animation-delay: .1s;
 }
+
 #l3 {
     animation-delay: .2s;
     -webkit-animation-delay: .2s;
 }
+
 #l4 {
     animation-delay: .3s;
     -webkit-animation-delay: .3s;
 }
+
 #l5 {
     animation-delay: .4s;
     -webkit-animation-delay: .4s;
@@ -361,13 +392,14 @@ text tspan{
     animation-delay: .5s;
     -webkit-animation-delay: .5s;
 }
-#winnersText{
+
+#winnersText {
     position: fixed;
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     border: solid #f09294 2px;
-    display:none;
+    display: none;
     background-color: #1561b4;
 }

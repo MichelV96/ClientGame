@@ -17,7 +17,17 @@ var pencilColor = "black";
 var pencilShape = "round";
 var pencilWidth = 20;
 
-//Selecteer zwart
+//Activeer buttoncontrol
+$(document).ready(function() {
+    buttonControl();
+});
+
+//Pas de stand van pencilWidth aan
+var dotSize = 1;
+var dotMaxSize = 10;
+$('#dotSize').text(dotSize + "/" + dotMaxSize);
+
+//Selecteer zwart voor de animatie
 colorAnimation('#black');
 
 //Aanmaken van het canvas
