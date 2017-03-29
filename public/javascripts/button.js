@@ -1,7 +1,7 @@
 //Gum, zet kleur op wit
 var eraser = function () {
     pencilColor = "white";
-    $('#canvas').css("cursor", "url('../images/eraserBig.png'), pointer")
+    $('#canvas').css("cursor", "url('../images/eraser.png'), pointer")
 }
 
 //Grotere lijn
@@ -50,4 +50,5 @@ var clearCanvas = function () {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
     pencilColor = "black";
     pencilWidth = 20;
+    colorAnimation('#black');
 }
