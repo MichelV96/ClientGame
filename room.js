@@ -9,49 +9,57 @@ var WordEnum = [
     "koning",
     "invalide",
     "vliegdekschip",
-    "nederland"
+    "nederland",
+    "pen",
+    "vlag",
+    "fles",
+    "computer",
+    "voetbal",
+    "huis",
+    "tas",
+    "boek"
 ];
 
-var Room = function(name) {
+var Room = function (name) {
     this.name = name;
     this.players = [];
-    this.scores = [0,0,0,0];
+    this.scores = [0, 0, 0, 0];
     this.started = false;
     this.drawer = 0;
     this.score = 50;
 
-    var random = Math.floor((Math.random()*WordEnum.length));
+    var random = Math.floor((Math.random() * WordEnum.length));
     this.woord = WordEnum[random];
 
     this.countdownSec = 120;
 
     var _this = this;
 
-    this.startGame = function (io){
-       this.timer = setInterval(function () {
-           _this.countdownSec--;
+    this.startGame = function (io) {
+        this.timer = setInterval(function () {
+            _this.countdownSec--;
             _this.score = (_this.score - 0.4).toFixed(2);
             Math.floor(_this.score);
             //console.log(_this.countdownSec);
-           if(_this.countdownSec == 0){
-               clearInterval(this);
-               for(var i=0; i<_this.players.length; i++){
-                   io.to(_this.players[i]).emit("stopTimer");
-               }
-               _this.countdownSec = 120;
-               _this.started = false;
-               _this.nextDrawer();
-           }
+            if (_this.countdownSec == 0) {
+                clearInterval(this);
+                for (var i = 0; i < _this.players.length; i++) {
+                    io.to(_this.players[i]).emit("stopTimer");
+                }
+                _this.countdownSec = 120;
+                _this.started = false;
+                _this.nextDrawer();
+            }
         }, 1000)
     };
 
-    this.nextDrawer = function(){
-        random = Math.floor((Math.random()*WordEnum.length));
+    this.nextDrawer = function () {
+        random = Math.floor((Math.random() * WordEnum.length));
         _this.woord = WordEnum[random];
         _this.score = 50;
-        if(_this.drawer == _this.players.length -1) {
+        if (_this.drawer == _this.players.length - 1) {
             _this.drawer = 0;
-        }else{
+        } else {
             _this.drawer = _this.drawer + 1;
         }
     };
