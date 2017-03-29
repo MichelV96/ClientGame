@@ -71,7 +71,8 @@ io.sockets.on('connection', function(client) {
         console.log("HET WOORD IS: " + Room.array[roomId].woord);
         //controleren als de message overeen komt met het woord dat geraden moet worden en of de tekenaar het niet zegt
         if(message.toLowerCase() == Room.array[roomId].woord && user != Room.array[roomId].players[ Room.array[roomId].drawer]){
-            console.log("HET WOORD IS GERADEN " + Room.array[roomId].score );
+            var oldScore = Room.array[roomId].scores[Room.array[roomId].players.indexOf(user)];
+            Room.array[roomId].scores.splice(Room.array[roomId].players.indexOf(user), 1, parseInt(Room.array[roomId].score)+parseInt(oldScore));
             clearInterval(Room.array[roomId].timer);
             Room.array[roomId].countdownSec = 120;
             Room.array[roomId].started = false;
@@ -100,6 +101,8 @@ io.sockets.on('connection', function(client) {
        if(Room.array[room] != undefined && Room.array[room].players.indexOf(user) > -1){
            //verwijder het element uit de array
            Room.array[room].players.splice(Room.array[room].players.indexOf(user), 1);
+           //zet de score weer op 0
+           Room.array[room].scores.splice(Room.array[room].players.indexOf(user), 1, 0);
 
            //checken of de room nu leeg is
            if(Room.array[room].players.length == 0){
@@ -118,6 +121,7 @@ io.sockets.on('connection', function(client) {
     client.on('startGame', function (data) {
        Room.array[data].startGame(io);
         Room.array[data].started = true;
+        io.to(Room.array[data].players[Room.array[data].drawer]).emit("plaatje", Room.array[data].woord);
         for(var i=0; i<Room.array[data].players.length; i++){
             io.to(Room.array[data].players[i]).emit("startTimer");
         }
