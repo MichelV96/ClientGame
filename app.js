@@ -105,7 +105,7 @@ io.sockets.on('connection', function(client) {
         if(Room.array[room])
         for(var i=0; i<Room.array[room].players.length; i++){
             if(i != Room.array[room].drawer){
-                io.to(Room.array[room].players[i]).emit("tekening", {x: data.x, y: data.y, color: data.color, size: data.size});
+                io.to(Room.array[room].players[i]).emit("tekening", {x: data.x, y: data.y, color: data.color, size: data.size, dragg: data.dragg});
             }
         }
     });

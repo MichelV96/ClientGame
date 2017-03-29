@@ -89,7 +89,7 @@
                     countdownSec--;
                     score = (score - 0.4).toFixed(2);
                     scoredisplay = Math.floor(score);
-                    socket.emit('tekenen', {room: roomId, x: ArrayX, y: ArrayY, color: ArrayColor, size: ArraySize});
+                    socket.emit('tekenen', {room: roomId, x: ArrayX, y: ArrayY, color: ArrayColor, size: ArraySize, dragg: Draggable});
                     start();
                 }, 1000);
                 document.getElementById("output").innerHTML = "Time left: 0" + min + ":" + sec + "<br> Points: " + scoredisplay;
@@ -142,6 +142,7 @@
         ArrayY = data.y;
         ArrayX = data.x;
         ArrayColor = data.color;
+        Draggable = data.dragg;
         DrawOnCanvas();
     });
 
