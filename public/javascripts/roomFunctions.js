@@ -58,6 +58,8 @@ $(window).bind('beforeunload', function () {
 
 function setRoomData(data){
     var drawer = data['players'][data.drawer];
+    var medals = ["goldmedal.png", "silvermedal.png", "bronzemedal.png", "nomedal.png"];
+
     if(drawer == userId){
         $("#startknop").css("display", "unset");
     }else{
@@ -67,7 +69,7 @@ function setRoomData(data){
     //score en spelers leegmaken
     $("#scores").empty();
     for (var i=0; i<data['players'].length; i++){
-        $("#scores").append(data['players'][i]);
+        $("#scores").append("<img src='images/"+medals[i]+"'>" + " " + data['players'][i]);
         if(i == data.drawer){
             $("#scores").append(" <b style='color:red'>Tekenaar</b>");
         }
