@@ -1,9 +1,13 @@
 //Breedte en hoogte van de canvas
-var canvasWidth = 400;
+var canvasWidth = 900;
 var canvasHeight = 400;
 
-//Maak array aan voor de lijnen
-var lines = [];
+//Maak arrays aan voor de lijnen
+var ArrayX = [];
+var ArrayY = [];
+var Draggable = [];
+var ArrayColor = [];
+var ArraySize = [];
 
 //Maak een boolean paint
 var paint;
@@ -11,7 +15,7 @@ var paint;
 //Standaard instellingen voor tekenen
 var pencilColor = "black";
 var pencilShape = "round";
-var pencilWidth = 11;
+var pencilWidth = 20;
 
 //Aanmaken van het canvas
 var canvasDiv = document.getElementById('canvasDiv');
@@ -33,7 +37,7 @@ $('#canvas').mousedown(function (e) {
 
     //Zet paint op true
     paint = true;
-    createLine(mouseX, mouseY);
+    createLine(mouseX, mouseY, false);
     DrawOnCanvas();
 });
 
@@ -44,7 +48,7 @@ $('#canvas').mousemove(function (e) {
         var mouseX = e.pageX - this.offsetLeft;
         var mouseY = e.pageY - this.offsetTop;
 
-        createLine(mouseX, mouseY);
+        createLine(mouseX, mouseY, true);
         DrawOnCanvas();
     }
 });
@@ -60,9 +64,12 @@ $('#canvas').mouseleave(function (e) {
 });
 
 //Maak een json object van een lijn en zet deze in een array
-var createLine = function (x, y) {
-    var line = {"x": x, "y": y, "color": pencilColor, "size": pencilWidth};
-    lines.push(line);
+var createLine = function (x, y, draggable) {
+    ArrayX.push(x);
+    ArrayY.push(y);
+    Draggable.push(draggable);
+    ArrayColor.push(pencilColor);
+    ArraySize.push(pencilWidth);
 }
 
 //Tekenen op het canvas
@@ -74,22 +81,26 @@ var DrawOnCanvas = function () {
     context.lineJoin = pencilShape;
 
     //Haal het aantal kliks uit de array en teken
-    for (var i = 0; i < lines.length; i++) {
+    for (var i = 0; i < ArrayX.length; i++) {
 
         //Geef kleur en dikte mee
-        context.strokeStyle = lines[i].color;
-        context.lineWidth = lines[i].size;
+        context.strokeStyle = ArrayColor[i];
+        context.lineWidth = ArraySize[i];
 
         //Begin van de lijn
         context.beginPath();
+        if (Draggable[i] && i) {
+            context.moveTo(ArrayX[i - 1], ArrayY[i - 1]);
+        } else {
+            context.moveTo(ArrayX[i] - 1, ArrayY[i] - 1);
+        }
 
         //Stel de coordinaten in voor het trekken van de lijn
-        context.moveTo(lines[i].x - 1, lines[i].y - 1);
+
 
         //Tekenen van de lijn
-        context.lineTo(lines[i].x, lines[i].y);
+        context.lineTo(ArrayX[i], ArrayY[i]);
         context.closePath();
         context.stroke();
     }
-}
-
+};

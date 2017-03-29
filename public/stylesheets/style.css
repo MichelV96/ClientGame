@@ -170,9 +170,10 @@ hr {
 
 .leftpanel {
     width: 75vw;
-    margin-top: 1em;
 }
-
+.welcome{
+    padding: 1em;
+}
 .hostPrivileges {
     background-color: #f09294;
     height: 20vh;
@@ -279,35 +280,38 @@ canvas {
     background-color: black;
 }
 
+#eraser {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url("../images/eraserSmall.png");
+}
+
+#eraser:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
 .paintPanel {
-    width: 50%;
-    margin-left: 25%;
-    border-radius: 10px;
-  height: 75vh;
+    height: 75vh;
+    background-color: lightgray;
 }
 
 .box {
+    display: flex;
     text-align: center;
-    background-color: white;
+    justify-content: space-between;
 }
 
-.one {
-    background-color: green;
-    padding: 20px;
-}
-
-.two {
-    background-color: blue;
-}
-
-.three {
-    background-color: yellow;
+.colordiv{
+    display: flex;
+    margin: 1em;
 }
 
 .buttons-left {
-    text-align: left;
+    float: left;
 }
 
 .buttons-right {
-    text-align: right;
+    float: right;
 }
